@@ -1,0 +1,11 @@
+targetTemplates:
+  Framework:
+    platform: iOS
+    deploymentTarget: '13.0'
+    type: framework
+    settings:
+      base:
+        MARKETING_VERSION: 1.0
+    #settings:
+    #  FRAMEWORK_SEARCH_PATHS: $(inherited) $(SRCROOT)/Carthage/Build/iOS
+      

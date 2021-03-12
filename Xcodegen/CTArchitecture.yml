@@ -1,0 +1,245 @@
+name: CTArchitecture
+
+options:
+  bundleIdPrefix: com.rjps.CTArchitecture
+  xcodeVersion: '12.0.1'
+  deploymentTarget: '13.0'
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  findCarthageFrameworks: false
+  minimumXcodeGenVersion: '2.18.0'
+
+####################### PACKAGES #######################
+
+packages:
+  RJSLibUF:
+    url: https://github.com/ricardopsantos/RJSLibUF
+    revision: "dd2e79b33861449b6a60c2c681a4c8d2c3185bf7"
+ 
+ # The Composable Architecture
+  ComposableArchitecture:
+    url: https://github.com/pointfreeco/swift-composable-architecture
+    branch: master
+    
+####################### Documents #######################
+####################### Documents #######################
+####################### Documents #######################
+
+fileGroups:
+
+  - ../Documents
+ 
+####################### INCLUDE #######################
+####################### INCLUDE #######################
+####################### INCLUDE #######################
+ 
+include:
+  # Templates
+  - _FrameworkTemplate.yml
+  # Scripts
+  - _SwiftLint.yml
+          
+####################### SETTINGS #######################
+####################### SETTINGS #######################
+####################### SETTINGS #######################
+ 
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 13.0
+    ENABLE_BITCODE: NO
+    SWIFT_VERSION: 5.3
+    
+targets:
+        
+  CTArchitecture:
+    type: application
+    platform: iOS
+    deploymentTarget: 13.0
+    settings:
+      base:
+        MARKETING_VERSION: 1.0
+    sources:
+       - path: ../CTArchitecture
+    dependencies:
+        
+#      - target: BaseUI
+#        link: true
+#      - target: AppCore
+#        link: true
+      - target: DevTools
+        link: true
+      - target: Extensions
+        link: true
+#      - target: Resources
+#        link: true
+#      - target: BaseDomain
+#        link: true
+#      - target: AppDomain
+ #       link: true
+        
+      - package: RJSLibUF
+        product: RJSLibUFBase
+        link: false
+#      - package: RJSLibUF
+#        product: RJSLibUFAppThemes
+#        link: false
+#      - package: RJSLibUF
+#        product: RJSLibUFNetworking
+#        link: false
+#      - package: RJSLibUF
+#        product: RJSLibUFDesignables
+#        link: false
+    
+      - package: ComposableArchitecture
+        link: false
+#      - package: Toast
+#        link: false
+
+  CTArchitectureTests:
+    templates:
+      - Framework
+    sources:
+      - path: ../CTArchitectureTests
+    dependencies:
+      - sdk: XCTest.framework
+  
+  CTArchitectureUITests:
+    templates:
+      - Framework
+    sources:
+      - path: ../CTArchitectureTests
+    dependencies:
+      - sdk: XCTest.framework
+      
+## BASE UI
+## BASE UI
+## BASE UI
+
+#  BaseUI:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../BaseUI
+#    dependencies:
+#      - target: BaseDomain
+#      - target: DevTools
+#      - target: Extensions
+        
+## LOGIC
+## LOGIC
+## LOGIC
+
+#  AppCore:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../AppCore
+#    dependencies:
+#      - target: DevTools
+#      - target: BaseDomain
+#      - target: AppDomain
+#      - target: WebAPI
+#      - target: Extensions
+#      - package: RJSLibUF
+#        product: RJSLibUFBase
+#        link: false
+#      - package: RJPSCData
+#        product: RJPSCData
+#        link: true
+                              
+## RESOURCES
+## RESOURCES
+## RESOURCES
+
+#  Resources:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../Resources
+  
+# BASE DOMAIN
+# BASE DOMAIN
+# BASE DOMAIN
+
+#  BaseDomain:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../BaseDomain
+#    dependencies:
+#      - target: DevTools
+#      - target: Extensions
+#      - target: Resources
+      
+# APP DOMAIN
+# APP DOMAIN
+# APP DOMAIN
+
+#  AppDomain:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../AppDomain
+#    dependencies:
+#      - target: BaseDomain
+#      - target: DevTools
+#      - target: Extensions
+#      - target: Resources
+
+# DEVTOOLS
+# DEVTOOLS
+# DEVTOOLS
+
+  DevTools:
+    templates:
+    - Framework
+    sources:
+      - path: ../DevTools
+    dependencies:
+      - package: RJSLibUF
+        product: RJSLibUFBase
+        link: true
+#      - package: RJSLibUF
+#        product: RJSLibUFAppThemes
+#        link: true
+#      - package: RJSLibUF
+#        product: RJSLibUFDesignables
+#        link: true
+#      - package: RJSLibUF
+#        product: RJSLibUFNetworking
+#        link: true
+        
+      - package: ComposableArchitecture
+        link: true
+        
+# EXTENSIONS
+# EXTENSIONS
+# EXTENSIONS
+
+  Extensions:
+    templates:
+    - Framework
+    sources:
+      - path: ../Extensions
+        
+## API
+## API
+## API
+
+#  WebAPI:
+#    templates:
+#    - Framework
+#    sources:
+#      - path: ../WebAPI
+#    dependencies:
+#      - target: DevTools
+#      - target: Extensions
+#      - target: AppDomain
+#      - target: BaseDomain
+#      - package: RJSLibUF
+#        product: RJSLibUFBase
+#        link: false
+#      - package: RJSLibUF
+#        product: RJSLibUFNetworking
+#        link: false
+        
