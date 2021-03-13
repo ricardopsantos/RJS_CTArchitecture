@@ -9,14 +9,7 @@ import ComposableArchitecture
 //
 // What was done on V1: Basic Setup
 //
-
-//
-// Each view powered by CTA have a store (generic over the state)
-// All the pure logic happens on the STATE mutations
-// All tne non pure logic happens on the EFFECTS
-// The Reducer powers the bussiness logic
-// The AppEnvironment gives the dependencies
-// AppState must conforme to Equatable to avoid duplications of state on [WithViewStore(self.store)...]
+// Note - From Part 1 of the videos (A Tour of the Composable Architecture: Part 1)
 //
 
 struct SwiftUIViewV1_Previews: PreviewProvider {
@@ -33,7 +26,7 @@ struct Todo_V1 {
 
     static let store = Store(
         initialState: AppState(todos: todos),
-        reducer: appReducer,
+        reducer: appReducer_V1,
         environment: AppEnvironment()
       )
         
@@ -74,15 +67,15 @@ struct Todo_V1 {
     // All tne non pure logic happens on the EFFECTS
     // The Reducer powers the bussiness logic
     //
-    static let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
-        
+    static let appReducer_V1 = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
+
         // We will make any mutations to the state necessary for the action.
         // The state value passed in here is an inout argument. So when an
         // action comes in, say the user tapping the todo checkbox,
         // we can just go into the state and mutate a todo’s isComplete field to be true.
-        
+
         switch action {
-        
+
         }
         
         // After you have performed all of the mutations you want to state,
@@ -112,5 +105,3 @@ struct Todo_V1 {
         }
     }
 }
-
-

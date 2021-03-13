@@ -1,61 +1,61 @@
 {
-  "name" : "CTArchitecture",
-  "aggregateTargets" : {
-    "SwiftLint" : {
-      "buildScripts" : [
-        {
-          "name" : "SwiftLint",
-          "shell" : "\/bin\/bash",
-          "script" : "${SRCROOT}\/Scripts\/swiftlint.sh\n"
-        }
-      ]
+  "packages" : {
+    "RJSLibUF" : {
+      "url" : "https:\/\/github.com\/ricardopsantos\/RJSLibUF",
+      "revision" : "4a6e4231d8026b10b4959cc7a086d328eed08eaa"
+    },
+    "ComposableArchitecture" : {
+      "branch" : "master",
+      "url" : "https:\/\/github.com\/pointfreeco\/swift-composable-architecture"
     }
   },
-  "targetTemplates" : {
-    "Framework" : {
+  "settings" : {
+    "base" : {
+      "SWIFT_VERSION" : 5.2999999999999998,
+      "ENABLE_BITCODE" : false,
+      "IPHONEOS_DEPLOYMENT_TARGET" : 13
+    }
+  },
+  "options" : {
+    "groupSortPosition" : "top",
+    "minimumXcodeGenVersion" : "2.18.0",
+    "generateEmptyDirectories" : true,
+    "deploymentTarget" : "13.0",
+    "findCarthageFrameworks" : false,
+    "xcodeVersion" : "12.0.1",
+    "bundleIdPrefix" : "com.rjps.CTArchitecture"
+  },
+  "targets" : {
+    "CTArchitectureTests" : {
+      "sources" : [
+        {
+          "path" : "..\/CTArchitectureTests"
+        }
+      ],
+      "dependencies" : [
+        {
+          "sdk" : "XCTest.framework"
+        },
+        {
+          "target" : "CTArchitecture",
+          "link" : true
+        },
+        {
+          "link" : false,
+          "package" : "ComposableArchitecture"
+        }
+      ],
+      "templates" : [
+        "UnitTest"
+      ]
+    },
+    "CTArchitecture" : {
       "platform" : "iOS",
-      "type" : "framework",
       "settings" : {
         "base" : {
           "MARKETING_VERSION" : 1
         }
       },
-      "deploymentTarget" : "13.0"
-    }
-  },
-  "targets" : {
-    "CTArchitectureUITests" : {
-      "sources" : [
-        {
-          "path" : "..\/CTArchitectureTests"
-        }
-      ],
-      "templates" : [
-        "Framework"
-      ],
-      "dependencies" : [
-        {
-          "sdk" : "XCTest.framework"
-        }
-      ]
-    },
-    "CTArchitectureTests" : {
-      "templates" : [
-        "Framework"
-      ],
-      "sources" : [
-        {
-          "path" : "..\/CTArchitectureTests"
-        }
-      ],
-      "dependencies" : [
-        {
-          "sdk" : "XCTest.framework"
-        }
-      ]
-    },
-    "CTArchitecture" : {
-      "platform" : "iOS",
       "type" : "application",
       "sources" : [
         {
@@ -64,50 +64,40 @@
       ],
       "dependencies" : [
         {
-          "target" : "DevTools",
-          "link" : true
+          "link" : true,
+          "target" : "DevTools"
         },
         {
-          "target" : "Extensions",
-          "link" : true
+          "link" : true,
+          "target" : "Extensions"
         },
         {
+          "package" : "RJSLibUF",
           "product" : "RJSLibUFBase",
-          "package" : "RJSLibUF",
           "link" : false
         },
         {
-          "product" : "RJSLibUFAppThemes",
+          "package" : "RJSLibUF",
           "link" : false,
-          "package" : "RJSLibUF"
+          "product" : "RJSLibUFAppThemes"
         },
         {
-          "product" : "RJSLibUFDesignables",
           "package" : "RJSLibUF",
-          "link" : false
+          "link" : false,
+          "product" : "RJSLibUFDesignables"
         },
         {
           "package" : "ComposableArchitecture",
           "link" : true
         }
       ],
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
-      },
       "deploymentTarget" : 13
     },
     "DevTools" : {
-      "sources" : [
-        {
-          "path" : "..\/DevTools"
-        }
-      ],
       "dependencies" : [
         {
-          "link" : true,
           "package" : "RJSLibUF",
+          "link" : true,
           "product" : "RJSLibUFBase"
         },
         {
@@ -116,54 +106,63 @@
           "link" : true
         },
         {
-          "link" : true,
           "package" : "RJSLibUF",
-          "product" : "RJSLibUFDesignables"
+          "product" : "RJSLibUFDesignables",
+          "link" : true
         }
       ],
-      "templates" : [
-        "Framework"
-      ]
-    },
-    "Extensions" : {
       "templates" : [
         "Framework"
       ],
       "sources" : [
         {
+          "path" : "..\/DevTools"
+        }
+      ]
+    },
+    "Extensions" : {
+      "sources" : [
+        {
           "path" : "..\/Extensions"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ]
+    }
+  },
+  "name" : "CTArchitecture",
+  "include" : [
+    "_FrameworkTemplate.yml",
+    "_UnitTestTemplate.yml",
+    "_SwiftLint.yml"
+  ],
+  "aggregateTargets" : {
+    "SwiftLint" : {
+      "buildScripts" : [
+        {
+          "shell" : "\/bin\/bash",
+          "script" : "${SRCROOT}\/Scripts\/swiftlint.sh\n",
+          "name" : "SwiftLint"
         }
       ]
     }
   },
-  "packages" : {
-    "RJSLibUF" : {
-      "revision" : "4a6e4231d8026b10b4959cc7a086d328eed08eaa",
-      "url" : "https:\/\/github.com\/ricardopsantos\/RJSLibUF"
+  "targetTemplates" : {
+    "UnitTest" : {
+      "platform" : "iOS",
+      "type" : "bundle.unit-test",
+      "deploymentTarget" : "13.0"
     },
-    "ComposableArchitecture" : {
-      "branch" : "master",
-      "url" : "https:\/\/github.com\/pointfreeco\/swift-composable-architecture"
-    }
-  },
-  "include" : [
-    "_FrameworkTemplate.yml",
-    "_SwiftLint.yml"
-  ],
-  "options" : {
-    "minimumXcodeGenVersion" : "2.18.0",
-    "generateEmptyDirectories" : true,
-    "bundleIdPrefix" : "com.rjps.CTArchitecture",
-    "xcodeVersion" : "12.0.1",
-    "findCarthageFrameworks" : false,
-    "groupSortPosition" : "top",
-    "deploymentTarget" : "13.0"
-  },
-  "settings" : {
-    "base" : {
-      "ENABLE_BITCODE" : false,
-      "SWIFT_VERSION" : 5.2999999999999998,
-      "IPHONEOS_DEPLOYMENT_TARGET" : 13
+    "Framework" : {
+      "type" : "framework",
+      "platform" : "iOS",
+      "deploymentTarget" : "13.0",
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      }
     }
   },
   "fileGroups" : [

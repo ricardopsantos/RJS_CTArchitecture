@@ -8,7 +8,11 @@ import ComposableArchitecture
 import RJSLibUFBase
 
 //
-// What was done on V3: Added a TodoReducer to handle specific events on the Todo Actions
+// What was done on V3:
+//  - Added a TodoReducer to handle specific events on the Todo Actions
+//  - appReducer_V1 was deprecated. Use appReducer_V2
+//
+// Note - From Part 1 of the videos (A Tour of the Composable Architecture: Part 1)
 //
 
 struct SwiftUIViewV3_Previews: PreviewProvider {
@@ -16,10 +20,6 @@ struct SwiftUIViewV3_Previews: PreviewProvider {
         Todo_V3.ContentView(store: Todo_V3.store)
     }
 }
-
-//
-// https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-1
-//
 
 struct Todo_V3 {
     //static let regularReducer = appReducer_V2
@@ -57,7 +57,7 @@ struct Todo_V3 {
       case checkboxTapped
       case textFieldChanged(String)
     }
-    
+
     // A reducer that operates on just a single todo and just with TodoActions
     static let todoReducer = Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
       switch action {
@@ -69,11 +69,11 @@ struct Todo_V3 {
         return .none
       }
     }.debug()
-    
+
     struct AppState: Equatable {
         var todos: [Todo] = []
     }
-    
+
     //
     // MARK:- Domain App
     //
@@ -91,7 +91,7 @@ struct Todo_V3 {
 
     }
 
-
+    // deprecated
     static let appReducer_V1 = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
        /*
         switch action {

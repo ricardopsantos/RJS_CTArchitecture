@@ -61,11 +61,18 @@ __`Scenes.TodoApp`__ is my walkthrough app on:
   * `Todo_V1.ContentView.swift`
   * `Todo_V2.ContentView.swift`
 
-* [A Tour of the Composable Architecture: Part 2](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-1)
+* [A Tour of the Composable Architecture: Part 2](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-2)
   * `Todo_V3.ContentView.swift`
   * `Todo_V4.ContentView.swift`
   * `Todo_V5.ContentView.swift`
 
+* [A Tour of the Composable Architecture: Part 3](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-3)
+  * `Todo_V6.ContentView.swift`
+  * `Todo_V7.ContentView.swift`
+  
+  * [A Tour of the Composable Architecture: Part 4](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-4)
+    * `Todo_V8.ContentView.swift`
+    
 (in progress)
 
 

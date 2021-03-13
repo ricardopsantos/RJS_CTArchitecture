@@ -4,6 +4,8 @@
 
 import Foundation
 import SwiftUI
+//
+import RJSLibUFBase
 
 //
 // What was done on V2: Added activityFeed, fixed crash on delete, improved ui
@@ -20,7 +22,7 @@ struct PrimeV2 {
         @Published var number: Int = 0
         @Published var favoritPrimes: [Int] = [3]
         @Published var activityFeed: [Activity] = []
-        
+
         struct Activity {
             let timestamp: Date
             let type: ActivityType
@@ -29,7 +31,7 @@ struct PrimeV2 {
                 case removedFavoritePrime(Int)
             }
         }
-        
+
         struct User {
             let userId: String
         }
@@ -42,10 +44,10 @@ struct PrimeV2 {
             }
         }
         func printState(sender: String, aux: String) {
-            print("# \(sender)")
-            print("# number: \(number)")
-            print("# favoritPrimes: \(favoritPrimes)")
-            print("# activityFeed: \(activityFeed.map({ $0.type }))")
+            RJS_Logs.info("# \(sender)")
+            RJS_Logs.info("# number: \(number)")
+            RJS_Logs.info("# favoritPrimes: \(favoritPrimes)")
+            RJS_Logs.info("# activityFeed: \(activityFeed.map({ $0.type }))")
         }
         func increment() {
             number += 1
@@ -61,7 +63,7 @@ struct PrimeV2 {
             return result
         }
         var isFavoritPrime: Bool {
-            let result = favoritPrimes.filter{ $0 == number }.count >= 1
+            let result = favoritPrimes.filter { $0 == number }.count >= 1
             printState(sender: #function, aux: "\(result)")
             return result
         }
@@ -106,7 +108,7 @@ struct PrimeV2 {
         @ObservedObject var state: AppState        // Global state
         @State var isPrimeModalShown: Bool = false // Local state
         @State var alertNthPrimeShow: Bool = false // Local state
-        @State var alertNthPrime: Int? = nil       // Local state
+        @State var alertNthPrime: Int?             // Local state
         @State var isLoadingAPI: Bool = false      // Local state
         var body: some View {
             VStack {

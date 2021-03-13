@@ -35,6 +35,8 @@ fileGroups:
 include:
   # Templates
   - _FrameworkTemplate.yml
+  - _UnitTestTemplate.yml
+
   # Scripts
   - _SwiftLint.yml
           
@@ -82,20 +84,28 @@ targets:
 
   CTArchitectureTests:
     templates:
-      - Framework
+      - UnitTest
     sources:
       - path: ../CTArchitectureTests
     dependencies:
       - sdk: XCTest.framework
-  
-  CTArchitectureUITests:
-    templates:
-      - Framework
-    sources:
-      - path: ../CTArchitectureTests
-    dependencies:
-      - sdk: XCTest.framework
-      
+      - target: CTArchitecture
+        link: true
+      - package: ComposableArchitecture
+        link: false
+#        
+#  CTArchitectureUITests:
+#    templates:
+#      - UnitTest
+#    sources:
+#      - path: ../CTArchitectureTests
+#    dependencies:
+#      - sdk: XCTest.framework
+#      - target: CTArchitecture
+#        link: true
+#      - package: ComposableArchitecture
+#        link: false
+           
 ## BASE UI
 ## BASE UI
 ## BASE UI

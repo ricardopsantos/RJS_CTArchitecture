@@ -10,13 +10,14 @@ import RJSLibUFBase
 //
 // What was done on V4: ForEach -> ForEachStore
 //
+// Note - From Part 2 of the videos (A Tour of the Composable Architecture: Part 2)
+//
 
 struct SwiftUIViewV4_Previews: PreviewProvider {
     static var previews: some View {
         Todo_V4.ContentView(store: Todo_V4.store)
     }
 }
-
 
 struct Todo_V4 {
     static let todos = [
@@ -29,7 +30,7 @@ struct Todo_V4 {
         reducer: appReducer_V2,
         environment: AppEnvironment()
       )
-    
+
     //
     // MARK:- ToDo Domain
     //
@@ -84,12 +85,11 @@ struct Todo_V4 {
         environment: { _ in TodoEnvironment() }
       )
     )
-    
+
     //
     // MARK:- UI
     //
 
-    
     /**
      
      ```
@@ -168,5 +168,3 @@ struct Todo_V4 {
         }
     }
 }
-
-
