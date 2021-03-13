@@ -1,5 +1,9 @@
 # RJS_CTArchitecture
 
+__These are my notes on The__ [__Composable Architecture__](https://github.com/pointfreeco/swift-composable-architecture)
+
+---
+
 <p align="center">
    <a href="https://developer.apple.com/swift/">
       <img src="https://img.shields.io/badge/Swift-5.3-orange.svg?style=flat" alt="Swift 5.3">
@@ -16,6 +20,7 @@
    </a>
 </p>
 
+
 ## Install
 
 No need to install anything, since the dependencie manager is SPM.
@@ -26,34 +31,73 @@ However, the project can all be rebuilt with `./makefile.sh` (for a total clean 
 
 ## About
 
-My notes on [The Composable Architecture
-](https://github.com/pointfreeco/swift-composable-architecture)
-
 ![Preview](Documents/preview.1.png)
 
-Contains 2 simple apps, both with incrementar version (v1, v2, v3) and previews on each version.
+This project contain 2 simple apps, both with incrementat versions (v1, v2, v3...) and and also previews on each version.
 
 ---
 
-__`Scenes.PrimeApp`__ is my walkthrough on:
+__`Scenes.PrimeApp`__ is my walkthrough app on:
 
-* https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep65-swiftui-and-state-management-part-1
+* [SwiftUI and State Management: Part 1](https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep65-swiftui-and-state-management-part-1)
 
-* https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep66-swiftui-and-state-management-part-2
+* [SwiftUI and State Management: Part 2](https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep66-swiftui-and-state-management-part-2)
 
-* https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep67-swiftui-and-state-management-part-3
+* [SwiftUI and State Management: Part 3](https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep66-swiftui-and-state-management-part-3)
 
-* https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep65-swiftui-and-state-management-part-1
+* [Composable State Management: Reducers](https://www.pointfree.co/collections/composable-architecture/swiftui-and-state-management/ep65-swiftui-and-state-management-part-1)
 
-__`Scenes.TodoApp`__ is my walkthrough on:
+__Code:__
 
-* https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-1
+* `Prime_V1.swift`
+* `Prime_V2.swift`
+* `Prime_V3.swift`
 
-* https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep101-a-tour-of-the-composable-architecture-part-2
+--
+
+__`Scenes.TodoApp`__ is my walkthrough app on:
+
+* [A Tour of the Composable Architecture: Part 1](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-1)
+  * `Todo_V1.ContentView.swift`
+  * `Todo_V2.ContentView.swift`
+
+* [A Tour of the Composable Architecture: Part 2](https://www.pointfree.co/collections/composable-architecture/a-tour-of-the-composable-architecture/ep100-a-tour-of-the-composable-architecture-part-1)
+  * `Todo_V3.ContentView.swift`
+  * `Todo_V4.ContentView.swift`
+  * `Todo_V5.ContentView.swift`
 
 (in progress)
 
 
-## To Do
+## Personal notes
 
-Some docs
+### Intro
+
+[__More__](https://github.com/pointfreeco/swift-composable-architecture#basic-usage)
+
+* __State__: A type that describes the data your feature needs to perform its logic and render its UI.
+Action: A type that represents all of the actions that can happen in your feature, such as user actions, notifications, event sources and more.
+
+* __Environment__: A type that holds any dependencies the feature needs, such as API clients, analytics clients, etc.
+
+* __Reducer__: A function that describes how to evolve the current state of the app to the next state given an action. The reducer is also responsible for returning any effects that should be run, such as API requests, which can be done by returning an Effect value.
+
+* __Store__: The runtime that actually drives your feature. You send all user actions to the store so that the store can run the reducer and effects, and you can observe state changes in the store so that you can update UI.
+
+### Misc
+
+* Each view powered by TCA have a (generic) store (over the state)
+
+* All the pure logic happens on the __State__ mutations
+
+* All tne non pure logic happens on the __Effects__
+
+* The __Reducer__ powers the BUSINESS logic
+
+* The __Reducer__ returns an __Effect__ (or more). Returns `[.none]` if there are no side efects
+
+* The AppEnvironment gives the dependencies
+
+* AppState must conforme to `Equatable` to avoid duplications of state on `WithViewStore(self.store)...``
+
+* __Reducers__ are the glue that bind together __State__, __Actions__, and __Effects__

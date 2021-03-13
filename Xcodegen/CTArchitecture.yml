@@ -14,9 +14,8 @@ options:
 packages:
   RJSLibUF:
     url: https://github.com/ricardopsantos/RJSLibUF
-    revision: "dd2e79b33861449b6a60c2c681a4c8d2c3185bf7"
+    revision: "4a6e4231d8026b10b4959cc7a086d328eed08eaa"
  
- # The Composable Architecture
   ComposableArchitecture:
     url: https://github.com/pointfreeco/swift-composable-architecture
     branch: master
@@ -61,39 +60,25 @@ targets:
     sources:
        - path: ../CTArchitecture
     dependencies:
-        
-#      - target: BaseUI
-#        link: true
-#      - target: AppCore
-#        link: true
+    
       - target: DevTools
         link: true
       - target: Extensions
         link: true
-#      - target: Resources
-#        link: true
-#      - target: BaseDomain
-#        link: true
-#      - target: AppDomain
- #       link: true
         
       - package: RJSLibUF
         product: RJSLibUFBase
         link: false
-#      - package: RJSLibUF
-#        product: RJSLibUFAppThemes
-#        link: false
-#      - package: RJSLibUF
-#        product: RJSLibUFNetworking
-#        link: false
-#      - package: RJSLibUF
-#        product: RJSLibUFDesignables
-#        link: false
+      - package: RJSLibUF
+        product: RJSLibUFAppThemes
+        link: false
+      - package: RJSLibUF
+        product: RJSLibUFDesignables
+        link: false
     
       - package: ComposableArchitecture
-        link: false
-#      - package: Toast
-#        link: false
+        link: true
+
 
   CTArchitectureTests:
     templates:
@@ -199,17 +184,11 @@ targets:
       - package: RJSLibUF
         product: RJSLibUFBase
         link: true
-#      - package: RJSLibUF
-#        product: RJSLibUFAppThemes
-#        link: true
-#      - package: RJSLibUF
-#        product: RJSLibUFDesignables
-#        link: true
-#      - package: RJSLibUF
-#        product: RJSLibUFNetworking
-#        link: true
-        
-      - package: ComposableArchitecture
+      - package: RJSLibUF
+        product: RJSLibUFAppThemes
+        link: true
+      - package: RJSLibUF
+        product: RJSLibUFDesignables
         link: true
         
 # EXTENSIONS

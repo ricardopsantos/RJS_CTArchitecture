@@ -23,14 +23,16 @@
 /* Begin PBXBuildFile section */
 		15427BFFB57FB89E243B8F09 /* Todo_V5.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F8C64B62BC8EAAAA9ADD92 /* Todo_V5.ContentView.swift */; };
 		1A0914F577E1CB152C863EFD /* Todo_V2.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09875329D37FFF798472F3B /* Todo_V2.ContentView.swift */; };
+		1DCCC73681C8AB16DB12EF96 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = D6CC9C82B47F946AAA1DBC0D /* ComposableArchitecture */; };
 		3135FDAFEA910A436BA090CC /* Todo_V4.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8126D53446394271DEFB466 /* Todo_V4.ContentView.swift */; };
 		35B05DBAC08B269EC41FC792 /* DevTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D5D6074C70C45801EC502 /* DevTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4693440C1408CB3F68060C6C /* RJSLibUFBase in Frameworks */ = {isa = PBXBuildFile; productRef = 2EA92284B472E080BE8AFA8C /* RJSLibUFBase */; };
+		56C08672FE22FECBE7029F5E /* RJSLibUFDesignables in Frameworks */ = {isa = PBXBuildFile; productRef = B3A34B733A5B7C7AED1668F4 /* RJSLibUFDesignables */; };
 		63FD85C952D89282A9216BD4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80CB0A7C73274C7648FDB1F /* XCTest.framework */; };
 		686314B07ED0B89A689057D2 /* Todo_V1.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1114074E25957566C3AFF84B /* Todo_V1.ContentView.swift */; };
 		6BF1CF96EE05B449B8F67D32 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D80CB0A7C73274C7648FDB1F /* XCTest.framework */; };
 		6ED25000F4D1B2E0880633D4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AD9FF9D2E3ECC300C10E4C /* SceneDelegate.swift */; };
-		72973602FF3703072E95726E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DC9674087FC38474BA78990C /* ComposableArchitecture */; };
+		72973602FF3703072E95726E /* RJSLibUFAppThemes in Frameworks */ = {isa = PBXBuildFile; productRef = 872A9E9AD27290B6A043EA3E /* RJSLibUFAppThemes */; };
 		7A7DB1A7235F51A04165B8CC /* Prime_V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAB04367225E64B47F4E2AA /* Prime_V2.swift */; };
 		81B505BAF57C558C63DC6DD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F390CCBB36E85FEEC33FCEC /* Main.storyboard */; };
 		8D056292AA3458347580E128 /* GoodToGoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EC5529FDB2E0C8CADE48A9 /* GoodToGoTests.swift */; };
@@ -112,6 +114,7 @@
 		F055B9538EA76A2C88D924C8 /* CTArchitectureUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CTArchitectureUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F630FA3528DFCDC3CB629E68 /* Extensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Extensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB4FE56B9CB4F5DB86319AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FFEC470486BCFBA68AED9D18 /* preview.1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preview.1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +123,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4693440C1408CB3F68060C6C /* RJSLibUFBase in Frameworks */,
-				72973602FF3703072E95726E /* ComposableArchitecture in Frameworks */,
+				72973602FF3703072E95726E /* RJSLibUFAppThemes in Frameworks */,
+				56C08672FE22FECBE7029F5E /* RJSLibUFDesignables in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +134,7 @@
 			files = (
 				BE189C7B31BAC05DDC36CE3F /* DevTools.framework in Frameworks */,
 				97DE693F25A8677938A3C52B /* Extensions.framework in Frameworks */,
+				1DCCC73681C8AB16DB12EF96 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +163,7 @@
 				7214B34B8F048626F03CCB56 /* Graph.json */,
 				057523420FFBBD54FF9CD380 /* Graph.viz */,
 				5E49A8ED97FE7CCEC31C10AE /* install.1.png */,
+				FFEC470486BCFBA68AED9D18 /* preview.1.png */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -279,8 +285,12 @@
 				C7866869D24B544D9FC03145 /* PBXTargetDependency */,
 				CDF43CD9674D26CD69464255 /* PBXTargetDependency */,
 				144076BC44AC16C81967A352 /* PBXTargetDependency */,
+				28EC1687702C344112D0142C /* PBXTargetDependency */,
 			);
 			name = CTArchitecture;
+			packageProductDependencies = (
+				D6CC9C82B47F946AAA1DBC0D /* ComposableArchitecture */,
+			);
 			productName = CTArchitecture;
 			productReference = 09FD382424344AF18F080D8D /* CTArchitecture.app */;
 			productType = "com.apple.product-type.application";
@@ -331,7 +341,8 @@
 			name = DevTools;
 			packageProductDependencies = (
 				2EA92284B472E080BE8AFA8C /* RJSLibUFBase */,
-				DC9674087FC38474BA78990C /* ComposableArchitecture */,
+				872A9E9AD27290B6A043EA3E /* RJSLibUFAppThemes */,
+				B3A34B733A5B7C7AED1668F4 /* RJSLibUFDesignables */,
 			);
 			productName = DevTools;
 			productReference = BE2D5D6074C70C45801EC502 /* DevTools.framework */;
@@ -478,7 +489,11 @@
 /* Begin PBXTargetDependency section */
 		144076BC44AC16C81967A352 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = "TEMP_ACE8073C-3A97-42DC-B9ED-09EECFC6E3C8" /* ComposableArchitecture */;
+			productRef = "TEMP_DD90EC23-E990-4258-86F6-B26AF0F6B66C" /* RJSLibUFAppThemes */;
+		};
+		28EC1687702C344112D0142C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = "TEMP_20497ECB-946A-4853-9E71-58427089F013" /* RJSLibUFDesignables */;
 		};
 		7AEBCD562A35714C7920D19A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -492,7 +507,7 @@
 		};
 		CDF43CD9674D26CD69464255 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = "TEMP_7D9D7469-A343-45C9-97E0-C18CE5DE8325" /* RJSLibUFBase */;
+			productRef = "TEMP_82ED8171-C789-41A1-9B5E-04CA492F2AE4" /* RJSLibUFBase */;
 		};
 /* End PBXTargetDependency section */
 
@@ -959,7 +974,7 @@
 			repositoryURL = "https://github.com/ricardopsantos/RJSLibUF";
 			requirement = {
 				kind = revision;
-				revision = dd2e79b33861449b6a60c2c681a4c8d2c3185bf7;
+				revision = 4a6e4231d8026b10b4959cc7a086d328eed08eaa;
 			};
 		};
 		CC43C5926C4900646F67EC76 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
@@ -978,20 +993,35 @@
 			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
 			productName = RJSLibUFBase;
 		};
-		DC9674087FC38474BA78990C /* ComposableArchitecture */ = {
+		872A9E9AD27290B6A043EA3E /* RJSLibUFAppThemes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
+			productName = RJSLibUFAppThemes;
+		};
+		B3A34B733A5B7C7AED1668F4 /* RJSLibUFDesignables */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
+			productName = RJSLibUFDesignables;
+		};
+		D6CC9C82B47F946AAA1DBC0D /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CC43C5926C4900646F67EC76 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		"TEMP_7D9D7469-A343-45C9-97E0-C18CE5DE8325" /* RJSLibUFBase */ = {
+		"TEMP_20497ECB-946A-4853-9E71-58427089F013" /* RJSLibUFDesignables */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
+			productName = RJSLibUFDesignables;
+		};
+		"TEMP_82ED8171-C789-41A1-9B5E-04CA492F2AE4" /* RJSLibUFBase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
 			productName = RJSLibUFBase;
 		};
-		"TEMP_ACE8073C-3A97-42DC-B9ED-09EECFC6E3C8" /* ComposableArchitecture */ = {
+		"TEMP_DD90EC23-E990-4258-86F6-B26AF0F6B66C" /* RJSLibUFAppThemes */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC43C5926C4900646F67EC76 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
+			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
+			productName = RJSLibUFAppThemes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
