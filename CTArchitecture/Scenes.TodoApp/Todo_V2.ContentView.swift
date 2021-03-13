@@ -12,6 +12,8 @@ import RJSLibUFBase
 // - Improved `ContentView: View`
 // - added actions on appReducer_V1 logic to Reducer
 //
+// Note - From Part 1 of the videos (A Tour of the Composable Architecture: Part 1)
+//
 
 struct SwiftUIViewV2_Previews: PreviewProvider {
     static var previews: some View {

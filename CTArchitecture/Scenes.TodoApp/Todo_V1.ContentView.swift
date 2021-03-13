@@ -9,6 +9,8 @@ import ComposableArchitecture
 //
 // What was done on V1: Basic Setup
 //
+// Note - From Part 1 of the videos (A Tour of the Composable Architecture: Part 1)
+//
 
 struct SwiftUIViewV1_Previews: PreviewProvider {
     static var previews: some View {

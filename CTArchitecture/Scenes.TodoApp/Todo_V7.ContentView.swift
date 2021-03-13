@@ -13,7 +13,8 @@ import RJSLibUFDesignables
 //  - Intro to Effects
 //  - New recucer to handle effect: appReducer_V5
 //  - Intro to [Effect.cancel]
-// Note - From Part3 of the videos (A Tour of the Composable Architecture: Part 3)
+//
+// Note - From Part 3 of the videos (A Tour of the Composable Architecture: Part 3)
 //
 
 //

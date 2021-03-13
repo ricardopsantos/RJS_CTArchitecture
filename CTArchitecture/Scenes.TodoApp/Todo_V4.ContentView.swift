@@ -10,6 +10,8 @@ import RJSLibUFBase
 //
 // What was done on V4: ForEach -> ForEachStore
 //
+// Note - From Part 2 of the videos (A Tour of the Composable Architecture: Part 2)
+//
 
 struct SwiftUIViewV4_Previews: PreviewProvider {
     static var previews: some View {

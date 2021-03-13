@@ -13,8 +13,10 @@ import RJSLibUFDesignables
 //  - Adding tests
 //  - Moving UUID depedency from Reducer to AppEnvironment
 //  - Adding sort
-// Note - From Part3 of the videos (A Tour of the Composable Architecture: Part 3)
 //
+// Note - From Part 3 of the videos (A Tour of the Composable Architecture: Part 3)
+//
+
 struct SwiftUIViewV6_Previews: PreviewProvider {
     static var previews: some View {
         Todo_V6.ContentView(store: Todo_V6.store)

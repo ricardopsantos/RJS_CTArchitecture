@@ -48,6 +48,7 @@
 		CFEE262A811AC1E8D9BC841F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFED4263F7E6DBBC3ED5F62 /* Utils.swift */; };
 		D75347EE25FD0FBD00928D46 /* Todo_V7.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75347ED25FD0FBD00928D46 /* Todo_V7.ContentView.swift */; };
 		D75347F825FD23A000928D46 /* Todo_V8.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75347F725FD23A000928D46 /* Todo_V8.ContentView.swift */; };
+		D753480225FD559B00928D46 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D753480125FD559B00928D46 /* Extensions.swift */; };
 		E7858A47B7D2AB66EA19ED02 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B1A9EE948C1B47867A42DC /* TabBarController.swift */; };
 		EA938B4ADE7F77DF63BAAFAB /* Extensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F630FA3528DFCDC3CB629E68 /* Extensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EBCD6CB9233D1BAC2BF8FA5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDB4FE56B9CB4F5DB86319AE /* Assets.xcassets */; };
@@ -120,6 +121,7 @@
 		CB296A31239F46173E2178BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D75347ED25FD0FBD00928D46 /* Todo_V7.ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo_V7.ContentView.swift; sourceTree = "<group>"; };
 		D75347F725FD23A000928D46 /* Todo_V8.ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo_V8.ContentView.swift; sourceTree = "<group>"; };
+		D753480125FD559B00928D46 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D80CB0A7C73274C7648FDB1F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
 		E2AD9FF9D2E3ECC300C10E4C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E91A8468D3452C2F46633455 /* Todo_V6.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo_V6.ContentView.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		D0B9D839A40455A6837CEADA /* CTArchitecture */ = {
 			isa = PBXGroup;
 			children = (
+				D753480125FD559B00928D46 /* Extensions.swift */,
 				85610E02E331FF1E778D834A /* Scenes.PrimeApp */,
 				73D24419E70588774B532940 /* Scenes.TodoApp */,
 				5589840F78BCF547AA266057 /* AppDelegate.swift */,
@@ -440,6 +443,7 @@
 				7A7DB1A7235F51A04165B8CC /* Prime_V2.swift in Sources */,
 				AE3222013E179DF4AC6C6F88 /* Prime_V3.swift in Sources */,
 				6ED25000F4D1B2E0880633D4 /* SceneDelegate.swift in Sources */,
+				D753480225FD559B00928D46 /* Extensions.swift in Sources */,
 				E7858A47B7D2AB66EA19ED02 /* TabBarController.swift in Sources */,
 				686314B07ED0B89A689057D2 /* Todo_V1.ContentView.swift in Sources */,
 				1A0914F577E1CB152C863EFD /* Todo_V2.ContentView.swift in Sources */,

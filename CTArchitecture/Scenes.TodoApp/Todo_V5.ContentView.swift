@@ -12,6 +12,8 @@ import RJSLibUFBase
 // 1 - Separated ContentView with subview : ForEachStore(state:action:) -> ForEachStore(state:action:content)
 // 2 - Added Add btn with a new reducer (on the current reduzer using the combine operator), see appReducer_V3
 //
+// Note - From Part 2 of the videos (A Tour of the Composable Architecture: Part 2)
+//
 
 struct SwiftUIViewV5_Previews: PreviewProvider {
     static var previews: some View {

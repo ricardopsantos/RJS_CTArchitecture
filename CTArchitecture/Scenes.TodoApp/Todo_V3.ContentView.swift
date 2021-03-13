@@ -11,6 +11,9 @@ import RJSLibUFBase
 // What was done on V3:
 //  - Added a TodoReducer to handle specific events on the Todo Actions
 //  - appReducer_V1 was deprecated. Use appReducer_V2
+//
+// Note - From Part 1 of the videos (A Tour of the Composable Architecture: Part 1)
+//
 
 struct SwiftUIViewV3_Previews: PreviewProvider {
     static var previews: some View {

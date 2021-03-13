@@ -3,15 +3,22 @@
 //
 
 import SwiftUI
+import Combine
 //
 import ComposableArchitecture
 import RJSLibUFBase
 import RJSLibUFDesignables
 
+
+
 //
 // What was done on V8:
+// - Fixing unit tests broken by the effects
+// - Added app enviroment var [var mainQueue: AnySchedulerOf<DispatchQueue>] so that we
+//   have control over time when writing tests
+// - appReducer_V5 is deprecated now. use appReducer_V6 that is using the [var mainQueue]
 //
-// Note - From Part4 of the videos (A Tour of the Composable Architecture: Part 3)
+// Note - From Part 4 of the videos (A Tour of the Composable Architecture: Part 4)
 //
 
 struct SwiftUIViewV8_Previews: PreviewProvider {
@@ -26,10 +33,12 @@ struct Todo_V8 {
         Todo(description: "Eggs", id: UUID(), isComplete: true),
         Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
 
+    // Note: dont forget to type erasure on [mainQueue]
     static let store = Store(
         initialState: AppState(todos: todos),
-        reducer: appReducer_V5,
-        environment: AppEnvironment(uuid: UUID.init)
+        reducer: appReducer_V6,
+        environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(),
+                                    uuid: UUID.init)
       )
     
     //
@@ -54,13 +63,14 @@ struct Todo_V8 {
     static let todoReducer = Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
       switch action {
       case .checkboxTapped:
+        //RJS_Logs.debug("[\(state.description)] tapped", tag: .client)
         state.isComplete.toggle()
         return .none
       case .textFieldChanged(let text):
         state.description = text
         return .none
       }
-    }.debug()
+    }//.debug()
     
     struct AppState: Equatable {
         var todos: [Todo] = []
@@ -76,42 +86,15 @@ struct Todo_V8 {
         case todoDelayCompleted
     }
 
+    // [AnySchedulerOf<DispatchQueue>] is a typealias for
+    // [AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>]
     struct AppEnvironment {
+        var mainQueue: AnySchedulerOf<DispatchQueue>
         var uuid: () -> UUID
     }
     
-    // DEPRECATED
-    static let appReducer_V4 = Reducer<AppState, AppAction, AppEnvironment>.combine(
-      todoReducer.forEach(
-        state: \AppState.todos,
-        action: /AppAction.todo(index:action:),
-        environment: { _ in TodoEnvironment() }
-      ),
-        // New reducer
-      Reducer { state, action, environment in
-        switch action {
-        case .addButtonTapped:
-            state.todos.insert(Todo(id: environment.uuid()), at: 0)
-          return .none
-        case .todo(index: _, action: .checkboxTapped):
-            // Stale sort
-            state.todos = state.todos
-              .enumerated()
-              .sorted(by: { lhs, rhs in
-                (rhs.element.isComplete && !lhs.element.isComplete) || lhs.offset < rhs.offset
-              })
-              .map(\.element)
-          return .none
-        case .todo(index: let index, action: let action):
-          return .none
-        case .todoDelayCompleted:
-            fatalError("created to be used on appReducer_V5")
-        }
-      }
-    )
-      .debug()
-    
-    static let appReducer_V5 = Reducer<AppState, AppAction, AppEnvironment>.combine(
+    // deprecated
+    static let _appReducer_V5 = Reducer<AppState, AppAction, AppEnvironment>.combine(
       todoReducer.forEach(
         state: \AppState.todos,
         action: /AppAction.todo(index:action:),
@@ -141,6 +124,71 @@ struct Todo_V8 {
                     
                     Effect(value: AppAction.todoDelayCompleted)
                         .delay(for: 1, scheduler: DispatchQueue.main)
+                        .eraseToEffect()      // Dont forget to eraseToEffect on end
+                        .cancellable(id: cancelId))
+            } else {
+                
+                //
+                // Version 1.1: we can use the "cancelInFlight" param to cancel automaticly
+                //
+                
+                struct CancelableIdThatWillNeverBeRepeatedAndMessUpOtherEffects: Hashable { }
+                
+                let cancelId = Bool.random() ? "todo completion effect" : "\(CancelableIdThatWillNeverBeRepeatedAndMessUpOtherEffects())"
+
+                return Effect(value: AppAction.todoDelayCompleted)
+                    .delay(for: 1, scheduler: DispatchQueue.main)
+                    .eraseToEffect()      // Dont forget to eraseToEffect on end
+                    .cancellable(id: cancelId, cancelInFlight: true)
+            }
+
+        case .todo(index: let index, action: let action):
+          return .none
+        case .todoDelayCompleted:
+            state.todos = state.todos
+              .enumerated()
+              .sorted(by: { lhs, rhs in
+                (rhs.element.isComplete && !lhs.element.isComplete) || lhs.offset < rhs.offset
+              })
+              .map(\.element)
+            return .none
+        }
+      }
+    )
+     // .debug()
+    
+    
+    // deprecated
+    static let appReducer_V6 = Reducer<AppState, AppAction, AppEnvironment>.combine(
+      todoReducer.forEach(
+        state: \AppState.todos,
+        action: /AppAction.todo(index:action:),
+        environment: { _ in TodoEnvironment() }
+      ),
+      Reducer { state, action, environment in
+        switch action {
+        case .addButtonTapped:
+            state.todos.insert(Todo(id: environment.uuid()), at: 0)
+          return .none
+        case .todo(index: _, action: .checkboxTapped):
+            if Bool.random() {
+                let cancelId = "todo completion effect"
+
+                //
+                // Version 1.0: were we cancel using the id, and manually
+                //
+                
+                // First cancel, then (restart) delay
+                return .concatenate(
+                    
+                    // Effect A
+                    
+                    Effect.cancel(id: cancelId), // This effect, when runs, cancel all pending effects with same id
+                    
+                    // Effect B
+                    
+                    Effect(value: AppAction.todoDelayCompleted)
+                        .delay(for: 1, scheduler: environment.mainQueue)
                         .eraseToEffect()      // Dont forget to eraseToEffect on end
                         .cancellable(id: cancelId))
             } else {
