@@ -489,11 +489,11 @@
 /* Begin PBXTargetDependency section */
 		144076BC44AC16C81967A352 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = "TEMP_DD90EC23-E990-4258-86F6-B26AF0F6B66C" /* RJSLibUFAppThemes */;
+			productRef = "TEMP_2BA6E572-6710-4070-B4DF-2AA49E7BEECA" /* RJSLibUFAppThemes */;
 		};
 		28EC1687702C344112D0142C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = "TEMP_20497ECB-946A-4853-9E71-58427089F013" /* RJSLibUFDesignables */;
+			productRef = "TEMP_95578E86-5A92-4CAB-93E3-F44714B16F31" /* RJSLibUFDesignables */;
 		};
 		7AEBCD562A35714C7920D19A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -507,7 +507,7 @@
 		};
 		CDF43CD9674D26CD69464255 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = "TEMP_82ED8171-C789-41A1-9B5E-04CA492F2AE4" /* RJSLibUFBase */;
+			productRef = "TEMP_0B3E0E1D-0681-4351-B11F-DEB134D6CC5C" /* RJSLibUFBase */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1008,20 +1008,20 @@
 			package = CC43C5926C4900646F67EC76 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		"TEMP_20497ECB-946A-4853-9E71-58427089F013" /* RJSLibUFDesignables */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
-			productName = RJSLibUFDesignables;
-		};
-		"TEMP_82ED8171-C789-41A1-9B5E-04CA492F2AE4" /* RJSLibUFBase */ = {
+		"TEMP_0B3E0E1D-0681-4351-B11F-DEB134D6CC5C" /* RJSLibUFBase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
 			productName = RJSLibUFBase;
 		};
-		"TEMP_DD90EC23-E990-4258-86F6-B26AF0F6B66C" /* RJSLibUFAppThemes */ = {
+		"TEMP_2BA6E572-6710-4070-B4DF-2AA49E7BEECA" /* RJSLibUFAppThemes */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
 			productName = RJSLibUFAppThemes;
+		};
+		"TEMP_95578E86-5A92-4CAB-93E3-F44714B16F31" /* RJSLibUFDesignables */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6181BDF369D1878DD5A01D23 /* XCRemoteSwiftPackageReference "RJSLibUF" */;
+			productName = RJSLibUFDesignables;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
