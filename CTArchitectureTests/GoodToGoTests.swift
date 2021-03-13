@@ -25,8 +25,10 @@ extension Scheduler {
 
 class CTArchitectureTests: XCTestCase {
     
+    let testsQueue = DispatchQueue.testScheduler
+    let mainQue = DispatchQueue.main
     //let testsQueue = DispatchQueue.testScheduler.eraseToAnyScheduler()
-    let testsQueue = DispatchQueue.main.eraseToAnyScheduler()
+   // let testsQueue = DispatchQueue.main.eraseToAnyScheduler()
     var uuidDependency: UUID {
         return UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!
     }
@@ -90,7 +92,7 @@ class CTArchitectureTests: XCTestCase {
         let store = TestStore(
             initialState: Todo_V8.AppState(todos: todos),
             reducer: Todo_V8.appReducer_V6,
-            environment: Todo_V8.AppEnvironment(mainQueue: testsQueue,
+            environment: Todo_V8.AppEnvironment(mainQueue: mainQue.eraseToAnyScheduler(),
                                                 uuid: {
                 fatalError("This should not be called on this test")
             })
@@ -178,7 +180,7 @@ class CTArchitectureTests: XCTestCase {
         let store = TestStore(
             initialState: Todo_V8.AppState(todos: []),
             reducer: reducer,
-            environment: Todo_V8.AppEnvironment(mainQueue: testsQueue,
+            environment: Todo_V8.AppEnvironment(mainQueue: mainQue.eraseToAnyScheduler(),
                                                 uuid: { [weak self] in self!.uuidDependency } )
         )
 
@@ -252,7 +254,7 @@ class CTArchitectureTests: XCTestCase {
     //
     // [testTodoSorting_v8] is [testTodoSorting_v6] fixed for side effects added on app version 7
     // Basicly we now need to say what to expect after the tap, AND after the efect
-    func testTodoSorting_v8() {
+    func testTodoSorting_v8_on_main_queu() {
             
             //
             // Test fixed after adding effects
@@ -274,7 +276,7 @@ class CTArchitectureTests: XCTestCase {
             let store = TestStore(
                 initialState: Todo_V8.AppState(todos: todos),
                 reducer: Todo_V8.appReducer_V6,
-                environment: Todo_V8.AppEnvironment(mainQueue: testsQueue,
+                environment: Todo_V8.AppEnvironment(mainQueue: mainQue.eraseToAnyScheduler(),
                                                     uuid: {
                     fatalError("This should not be called on this test")
                 })
@@ -304,6 +306,56 @@ class CTArchitectureTests: XCTestCase {
                           isComplete: true
                         )
                     ]
+                }
+            )
+    }
+    
+    
+    //
+    // [testTodoSorting_v8] is [testTodoSorting_v6] fixed for side effects added on app version 7
+    // Basicly we now need to say what to expect after the tap, AND after the efect
+    func testTodoSorting_v8_on_tests_qeue() {
+            
+            //
+            // Test fixed after adding effects
+            //
+        
+            let todos = [
+                Todo_V8.Todo(
+                  description: "Milk",
+                  id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!,
+                  isComplete: false
+                ),
+                Todo_V8.Todo(
+                  description: "Eggs",
+                  id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
+                  isComplete: false
+                )
+            ]
+            
+            let store = TestStore(
+                initialState: Todo_V8.AppState(todos: todos),
+                reducer: Todo_V8.appReducer_V6,
+                environment: Todo_V8.AppEnvironment(mainQueue: testsQueue.eraseToAnyScheduler(),
+                                                    uuid: {
+                    fatalError("This should not be called on this test")
+                })
+            )
+
+            store.assert(
+                .send(.todo(index: 0, action: .checkboxTapped)) {
+                    // What we expect after tap?
+                    // 1 : We say that when we tap on index 1, index 1 should toggle
+                    $0.todos[0].isComplete = true
+                },
+                .do {
+                 // _ = XCTWaiter.wait(for: [self.expectation(description: "wait")], timeout: 1)
+                    self.testsQueue.advance(by: 1) // No need to wayt any more, we just skip 1s further
+                },
+                .receive(.todoDelayCompleted) { // Dont forget to add after XCTWaiter to say we are expecting to receive this action
+                    // What we expect after todoDelayCompleted?
+                    // 2 : We say that milk 2 should be first now, and not completed
+                    $0.todos.swapAt(0, 1)
                 }
             )
     }

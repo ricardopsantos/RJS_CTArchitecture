@@ -158,7 +158,6 @@ struct Todo_V8 {
      // .debug()
     
     
-    // deprecated
     static let appReducer_V6 = Reducer<AppState, AppAction, AppEnvironment>.combine(
       todoReducer.forEach(
         state: \AppState.todos,
@@ -202,7 +201,7 @@ struct Todo_V8 {
                 let cancelId = Bool.random() ? "todo completion effect" : "\(CancelableIdThatWillNeverBeRepeatedAndMessUpOtherEffects())"
 
                 return Effect(value: AppAction.todoDelayCompleted)
-                    .delay(for: 1, scheduler: DispatchQueue.main)
+                    .delay(for: 1, scheduler: environment.mainQueue)
                     .eraseToEffect()      // Dont forget to eraseToEffect on end
                     .cancellable(id: cancelId, cancelInFlight: true)
             }
