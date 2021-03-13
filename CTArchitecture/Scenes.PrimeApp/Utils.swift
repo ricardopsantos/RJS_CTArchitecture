@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public func nthPrimeV1(_ n: Int, callback: @escaping (Int?)->Void) {
+public func nthPrimeV1(_ n: Int, callback: @escaping (Int?) -> Void) {
     let seconds = 3.0
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
         if Bool.random() {
@@ -34,16 +34,13 @@ public extension UIColor {
     }
 }
 
-
 public extension Array {
-    
     private func safeItem(at index: Int) -> Element? {
         guard index >= 0 else { return nil }
         return Int(index) < count ? self[Int(index)] : nil
     }
-    
+
     func element(at index: Int) -> Element? {
         safeItem(at: index)
     }
 }
-

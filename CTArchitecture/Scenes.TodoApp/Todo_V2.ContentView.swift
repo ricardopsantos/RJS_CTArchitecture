@@ -8,20 +8,9 @@ import ComposableArchitecture
 import RJSLibUFBase
 
 //
-// What was done on V2: Improved `ContentView: View` and added some logic to Reducer
-//
-
-//
-// SIDE NOTES
-//
-// Each view powered by CTA have a store (generic over the state)
-// All the pure logic happens on the STATE mutations
-// All tne non pure logic happens on the EFFECTS
-// The REDUCER powers the BUSINESS logic
-// The REDUCER returns an EFFECT (or more). Returns [.none] if there are no side efects
-// The AppEnvironment gives the dependencies
-// AppState must conforme to Equatable to avoid duplications of state on [WithViewStore(self.store)...]
-// REDUCES are the glue that bind together STATE, ACTIONS, and EFFECTS
+// What was done on V2:
+// - Improved `ContentView: View`
+// - added actions on appReducer_V1 logic to Reducer
 //
 
 struct SwiftUIViewV2_Previews: PreviewProvider {
@@ -31,8 +20,8 @@ struct SwiftUIViewV2_Previews: PreviewProvider {
 }
 
 struct Todo_V2 {
-    static let regularReducer = appReducer
-    static let reducerOnDebug = appReducer.debug() // Will log all events
+    static let regularReducer = appReducer_V1
+    static let reducerOnDebug = appReducer_V1.debug() // Will log all events
     static let reducer = RJS_Utils.onSimulator ? reducerOnDebug : regularReducer
     static let todos = [
         Todo(description: "Milk", id: UUID(), isComplete: false),
@@ -77,7 +66,7 @@ struct Todo_V2 {
 
     }
 
-    static let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
+    static let appReducer_V1 = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
         switch action {
         case .todoCheckboxTapped(index: let index):
             state.todos[index].isComplete.toggle()
@@ -118,7 +107,6 @@ struct Todo_V2 {
                             get: { $0.todos[index].description }, // acess to viewstore state
                             send: { .todoTextFieldChanged(index: index, text: $0) }
                           )
-                            
                         )
                     }.foregroundColor(todo.isComplete ? .gray : nil)
                 }
@@ -129,5 +117,3 @@ struct Todo_V2 {
         }
     }
 }
-
-

@@ -53,7 +53,16 @@ public class TabBarController: UITabBarController {
         let todo_5 = createControllers(tabName: "CTA.V5",
                                        vc: Todo_V5.ContentView(store: Todo_V5.store).viewController)
         
-        viewControllers = [prime_3, todo_5]
+        let todo_6 = createControllers(tabName: "CTA.V6",
+                                       vc: Todo_V6.ContentView(store: Todo_V6.store).viewController)
+        
+        let todo_7 = createControllers(tabName: "CTA.V7",
+                                       vc: Todo_V7.ContentView(store: Todo_V7.store).viewController)
+        
+        let todo_8 = createControllers(tabName: "CTA.V8",
+                                       vc: Todo_V8.ContentView(store: Todo_V8.store).viewController)
+        
+        viewControllers = [todo_8, prime_3]
     }
 
     private func createControllers(tabName: String, vc: UIViewController) -> UINavigationController {

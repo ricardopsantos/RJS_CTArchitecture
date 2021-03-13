@@ -4,6 +4,8 @@
 
 import Foundation
 import SwiftUI
+//
+import RJSLibUFBase
 
 //
 // https://www.pointfree.co/episodes/ep68-composable-state-management-reducers
@@ -84,7 +86,7 @@ struct PrimeV3 {
         var favoritPrimes: [Int] = [3]
         var activityFeed: [Activity] = []
         var userIsLoged: User?
-        
+
         struct Activity {
             let timestamp: Date
             let type: ActivityType
@@ -93,13 +95,13 @@ struct PrimeV3 {
                 case removedFavoritePrime(Int)
             }
         }
-        
+
         struct User {
             let id: String
             let name: String
             let bio: String
         }
-        
+
         var upperRange: Int {
             if favoritPrimes.count == 0 {
                 return 0
@@ -107,12 +109,12 @@ struct PrimeV3 {
                 return favoritPrimes.count-1
             }
         }
-        
+
         func printState(sender: String, aux: String) {
-            print("# \(sender)")
-            print("# number: \(number)")
-            print("# favoritPrimes: \(favoritPrimes)")
-            print("# activityFeed: \(activityFeed.map({ $0.type }))")
+            RJS_Logs.info("# \(sender)")
+            RJS_Logs.info("# number: \(number)")
+            RJS_Logs.info("# favoritPrimes: \(favoritPrimes)")
+            RJS_Logs.info("# activityFeed: \(activityFeed.map({ $0.type }))")
         }
 
         var isPrime: Bool {

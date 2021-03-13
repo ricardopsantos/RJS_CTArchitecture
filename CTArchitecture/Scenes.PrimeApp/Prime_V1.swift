@@ -20,7 +20,7 @@ struct PrimeV1 {
     class AppState: ObservableObject {
         @Published var count: Int = 0
         @Published var favoritPrimes: [Int] = []
-        
+
         var isFavoritPrime: Bool { favoritPrimes.contains(count) }
         func addPrime() { favoritPrimes.append(count) }
         func removePrime() { favoritPrimes = favoritPrimes.filter({ $0 != count }) }
@@ -48,7 +48,7 @@ struct PrimeV1 {
         @ObservedObject var state: AppState        // Global state
         @State var isPrimeModalShown: Bool = false // Local state
         @State var alertNthPrimeShow: Bool = false // Local state
-        @State var alertNthPrime: Int? = nil // Local state
+        @State var alertNthPrime: Int?             // Local state
         var body: some View {
             VStack {
                 HStack {

@@ -17,7 +17,6 @@ struct SwiftUIViewV4_Previews: PreviewProvider {
     }
 }
 
-
 struct Todo_V4 {
     static let todos = [
         Todo(description: "Milk", id: UUID(), isComplete: false),
@@ -29,7 +28,7 @@ struct Todo_V4 {
         reducer: appReducer_V2,
         environment: AppEnvironment()
       )
-    
+
     //
     // MARK:- ToDo Domain
     //
@@ -84,12 +83,11 @@ struct Todo_V4 {
         environment: { _ in TodoEnvironment() }
       )
     )
-    
+
     //
     // MARK:- UI
     //
 
-    
     /**
      
      ```
@@ -168,5 +166,3 @@ struct Todo_V4 {
         }
     }
 }
-
-

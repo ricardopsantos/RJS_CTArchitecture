@@ -1,0 +1,8 @@
+targetTemplates:
+  UnitTest:
+    platform: iOS
+    deploymentTarget: '13.0'
+    type: bundle.unit-test
+    #settings:
+    #  FRAMEWORK_SEARCH_PATHS: $(inherited) $(SRCROOT)/Carthage/Build/iOS
+      
