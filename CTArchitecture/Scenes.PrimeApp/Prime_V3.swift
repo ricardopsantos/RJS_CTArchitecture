@@ -141,7 +141,7 @@ struct PrimeV3 {
         var body: some View {
             NavigationView {
                 List {
-                    Text("ContentView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                    Text("ContentView_RELOAD").foregroundColor(Color.random).font(.body)
                     NavigationLink(destination: CounterView(store: store)) {
                         Text("Find primes")
                     }
@@ -162,7 +162,7 @@ struct PrimeV3 {
         @State var isLoadingAPI: Bool = false      // Local state
         var body: some View {
             VStack {
-                Text("CounterView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                Text("CounterView_RELOAD").foregroundColor(Color.random).font(.body)
                 HStack {
                     Button(action: {
                         //store.value.decrement()
@@ -203,7 +203,7 @@ struct PrimeV3 {
         @ObservedObject var store: Store<AppState, AppAction>
         var body: some View {
             VStack {
-                Text("IsPrimeModalView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                Text("IsPrimeModalView_RELOAD").foregroundColor(Color.random).font(.body)
                 if store.value.number.isPrime {
                     Text("\(store.value.number) is prime")
                     Text("favoritPrimes: \(store.value.favoritPrimes.count)")

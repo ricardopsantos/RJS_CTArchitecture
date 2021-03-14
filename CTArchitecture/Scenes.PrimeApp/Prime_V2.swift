@@ -91,7 +91,7 @@ struct PrimeV2 {
         var body: some View {
             NavigationView {
                 List {
-                    Text("ContentView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                    Text("ContentView_RELOAD").foregroundColor(Color.random).font(.body)
                     NavigationLink(destination: CounterView(state: state)) {
                         Text("Find primes")
                     }
@@ -112,7 +112,7 @@ struct PrimeV2 {
         @State var isLoadingAPI: Bool = false      // Local state
         var body: some View {
             VStack {
-                Text("CounterView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                Text("CounterView_RELOAD").foregroundColor(Color.random).font(.body)
                 HStack {
                     Button(action: { state.decrement() }, label: { Text("-") })
                     Text("\(state.number)")
@@ -143,7 +143,7 @@ struct PrimeV2 {
         @ObservedObject var state: AppState // Global state
         var body: some View {
             VStack {
-                Text("IsPrimeModalView_RELOAD").foregroundColor(Color(UIColor.random)).font(.body)
+                Text("IsPrimeModalView_RELOAD").foregroundColor(Color.random).font(.body)
                 if state.number.isPrime {
                     Text("\(state.number) is prime")
                     Text("favoritPrimes: \(state.favoritPrimes.count)")

@@ -45,10 +45,11 @@
 		BE189C7B31BAC05DDC36CE3F /* DevTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2D5D6074C70C45801EC502 /* DevTools.framework */; };
 		BED50C128EF5B807E168E001 /* DevTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0836991CA2FCDF1DC6A1A0AC /* DevTools.swift */; };
 		CA93646B3539F13B2DA64FC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5589840F78BCF547AA266057 /* AppDelegate.swift */; };
-		CFEE262A811AC1E8D9BC841F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFED4263F7E6DBBC3ED5F62 /* Utils.swift */; };
 		D75347EE25FD0FBD00928D46 /* Todo_V7.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75347ED25FD0FBD00928D46 /* Todo_V7.ContentView.swift */; };
 		D75347F825FD23A000928D46 /* Todo_V8.ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75347F725FD23A000928D46 /* Todo_V8.ContentView.swift */; };
-		D753480225FD559B00928D46 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D753480125FD559B00928D46 /* Extensions.swift */; };
+		D753480225FD559B00928D46 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D753480125FD559B00928D46 /* Utils.swift */; };
+		D7BAFEE025FE14BB00CB3F5C /* Prime_V4_Final.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAFEDF25FE14BB00CB3F5C /* Prime_V4_Final.swift */; };
+		D7BAFEF225FE154E00CB3F5C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BAFEF125FE154E00CB3F5C /* Extensions.swift */; };
 		E7858A47B7D2AB66EA19ED02 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B1A9EE948C1B47867A42DC /* TabBarController.swift */; };
 		EA938B4ADE7F77DF63BAAFAB /* Extensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F630FA3528DFCDC3CB629E68 /* Extensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EBCD6CB9233D1BAC2BF8FA5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDB4FE56B9CB4F5DB86319AE /* Assets.xcassets */; };
@@ -112,7 +113,6 @@
 		7214B34B8F048626F03CCB56 /* Graph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Graph.json; sourceTree = "<group>"; };
 		778A093CA743ADDCEB58183A /* Prime_V1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prime_V1.swift; sourceTree = "<group>"; };
 		8B83D210D256874D59D8994F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8EFED4263F7E6DBBC3ED5F62 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		A1B1A9EE948C1B47867A42DC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B09875329D37FFF798472F3B /* Todo_V2.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo_V2.ContentView.swift; sourceTree = "<group>"; };
 		B4EC5529FDB2E0C8CADE48A9 /* GoodToGoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodToGoTests.swift; sourceTree = "<group>"; };
@@ -121,7 +121,9 @@
 		CB296A31239F46173E2178BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D75347ED25FD0FBD00928D46 /* Todo_V7.ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo_V7.ContentView.swift; sourceTree = "<group>"; };
 		D75347F725FD23A000928D46 /* Todo_V8.ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo_V8.ContentView.swift; sourceTree = "<group>"; };
-		D753480125FD559B00928D46 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D753480125FD559B00928D46 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		D7BAFEDF25FE14BB00CB3F5C /* Prime_V4_Final.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prime_V4_Final.swift; sourceTree = "<group>"; };
+		D7BAFEF125FE154E00CB3F5C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D80CB0A7C73274C7648FDB1F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
 		E2AD9FF9D2E3ECC300C10E4C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E91A8468D3452C2F46633455 /* Todo_V6.ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo_V6.ContentView.swift; sourceTree = "<group>"; };
@@ -204,7 +206,7 @@
 				778A093CA743ADDCEB58183A /* Prime_V1.swift */,
 				2FAB04367225E64B47F4E2AA /* Prime_V2.swift */,
 				416FC358A2053FBEB4C566B8 /* Prime_V3.swift */,
-				8EFED4263F7E6DBBC3ED5F62 /* Utils.swift */,
+				D7BAFEDF25FE14BB00CB3F5C /* Prime_V4_Final.swift */,
 			);
 			path = Scenes.PrimeApp;
 			sourceTree = "<group>";
@@ -248,7 +250,8 @@
 		D0B9D839A40455A6837CEADA /* CTArchitecture */ = {
 			isa = PBXGroup;
 			children = (
-				D753480125FD559B00928D46 /* Extensions.swift */,
+				D753480125FD559B00928D46 /* Utils.swift */,
+				D7BAFEF125FE154E00CB3F5C /* Extensions.swift */,
 				85610E02E331FF1E778D834A /* Scenes.PrimeApp */,
 				73D24419E70588774B532940 /* Scenes.TodoApp */,
 				5589840F78BCF547AA266057 /* AppDelegate.swift */,
@@ -443,17 +446,18 @@
 				7A7DB1A7235F51A04165B8CC /* Prime_V2.swift in Sources */,
 				AE3222013E179DF4AC6C6F88 /* Prime_V3.swift in Sources */,
 				6ED25000F4D1B2E0880633D4 /* SceneDelegate.swift in Sources */,
-				D753480225FD559B00928D46 /* Extensions.swift in Sources */,
+				D753480225FD559B00928D46 /* Utils.swift in Sources */,
 				E7858A47B7D2AB66EA19ED02 /* TabBarController.swift in Sources */,
 				686314B07ED0B89A689057D2 /* Todo_V1.ContentView.swift in Sources */,
 				1A0914F577E1CB152C863EFD /* Todo_V2.ContentView.swift in Sources */,
 				D75347F825FD23A000928D46 /* Todo_V8.ContentView.swift in Sources */,
+				D7BAFEF225FE154E00CB3F5C /* Extensions.swift in Sources */,
 				9703BE51FE69C0DD2EA6AE4D /* Todo_V3.ContentView.swift in Sources */,
 				3135FDAFEA910A436BA090CC /* Todo_V4.ContentView.swift in Sources */,
 				15427BFFB57FB89E243B8F09 /* Todo_V5.ContentView.swift in Sources */,
 				1DEBDED2C54B398B994F3C1C /* Todo_V6.ContentView.swift in Sources */,
-				CFEE262A811AC1E8D9BC841F /* Utils.swift in Sources */,
 				D75347EE25FD0FBD00928D46 /* Todo_V7.ContentView.swift in Sources */,
+				D7BAFEE025FE14BB00CB3F5C /* Prime_V4_Final.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

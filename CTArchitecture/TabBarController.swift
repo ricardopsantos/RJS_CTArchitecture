@@ -38,6 +38,9 @@ public class TabBarController: UITabBarController {
         let prime_3 = createControllers(tabName: "P.V3",
                                         vc: PrimeV3.ContentView(store: PrimeV3.Store(initialValue: PrimeV3.AppState(), reducer: PrimeV3().appReducer)).viewController)
 
+        let prime_final = createControllers(tabName: "P.Final",
+                                            vc: V.PrimeApp.ContentView(store: GenericStore(initialValue: V.PrimeApp.AppState(), reducer:  AppReducers.PrimeApp().appReducer)).viewController)
+        
         let todo_1 = createControllers(tabName: "CTA.V1",
                                        vc: Todo_V1.ContentView(store: Todo_V1.store).viewController)
         
@@ -62,7 +65,7 @@ public class TabBarController: UITabBarController {
         let todo_8 = createControllers(tabName: "CTA.V8",
                                        vc: Todo_V8.ContentView(store: Todo_V8.store).viewController)
         
-        viewControllers = [todo_8, prime_3]
+        viewControllers = [todo_8, prime_final, prime_3]
     }
 
     private func createControllers(tabName: String, vc: UIViewController) -> UINavigationController {
