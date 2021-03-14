@@ -265,5 +265,3 @@ struct Todo_V7 {
       }
     }
 }
-
-

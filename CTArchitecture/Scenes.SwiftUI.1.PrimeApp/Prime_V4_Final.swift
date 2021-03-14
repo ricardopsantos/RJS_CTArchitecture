@@ -8,91 +8,109 @@ import SwiftUI
 import RJSLibUFBase
 
 //
-// What was done: Code separation and clean up
+// MARK:- PreviewProvider
 //
 
 struct PrimeApp_Previews: PreviewProvider {
     static var previews: some View {
-        PrimeV3.ContentView(store: PrimeV3.Store(initialValue: PrimeV3.AppState(), reducer: PrimeV3().appReducer))
-    }
-}
-
-extension D { struct PrimeApp { private init() { } } }
-
-//
-// MARK:- Domain (Views)
-//
-
-extension D.PrimeApp {
-    enum FavoritePrimeAction {
-        case deleteFavoritePrimes(IndexSet)
-    }
-    enum PrimeModalAction {
-        case saveFavoritePrimeTap
-        case removeFavoritePrimeTap
-    }
-
-    enum CounterAction {
-        case decrementTap
-        case incrementTap
-    }
-
-    // AppAction is a type to nest other app actions
-    enum AppAction {
-        case counter(CounterAction)
-        case primeModal(PrimeModalAction)
-        case favoritePrime(FavoritePrimeAction)
+        PrimeV3.ContentView(store: AppStores.PrimeApp.store)
     }
 }
 
 //
-// MARK:- Domain (App State)
+// MARK:- Store
 //
 
-extension D.PrimeApp {
+extension AppStores {
+    struct PrimeApp {
+        #warning("fix!!!!! wrong app")
+        #warning("fix!!!!! wrong app")
+        #warning("fix!!!!! wrong app")
+
+       static let store = PrimeV3.Store(initialValue: PrimeV3.AppState(), reducer: PrimeV3().appReducer)
+    }
+}
+
+//
+// MARK:- Domain
+//
+
+extension D {
     
-    struct AppState {
-        var number: Int = 0
-        var favoritPrimes: [Int] = [3]
-        var activityFeed: [Activity] = []
-
-        struct Activity {
-            let timestamp: Date
-            let type: ActivityType
-            enum ActivityType {
-                case addedFavoritePrime(Int)
-                case removedFavoritePrime(Int)
-            }
+    struct PrimeApp {
+        
+        //
+        // MARK:- View Domain (ContentView)
+        //
+        
+        enum FavoritePrimeAction {
+            case deleteFavoritePrimes(IndexSet)
         }
-
-        var upperRange: Int {
-            if favoritPrimes.count == 0 {
-                return 0
-            } else {
-                return favoritPrimes.count-1
-            }
-        }
-
-        func printState(sender: String, aux: String) {
-            RJS_Logs.info("# \(sender)")
-            RJS_Logs.info("# number: \(number)")
-            RJS_Logs.info("# favoritPrimes: \(favoritPrimes)")
-            RJS_Logs.info("# activityFeed: \(activityFeed.map({ $0.type }))")
-        }
-
-        var isPrime: Bool {
-            let result = number.isPrime
-            printState(sender: #function, aux: "\(result)")
-            return result
+        enum PrimeModalAction {
+            case saveFavoritePrimeTap
+            case removeFavoritePrimeTap
         }
         
-        var isFavoritPrime: Bool {
-            let result = favoritPrimes.filter{ $0 == number }.count >= 1
-            printState(sender: #function, aux: "\(result)")
-            return result
+        enum CounterAction {
+            case decrementTap
+            case incrementTap
+        }
+        
+        enum AppAction {
+            case counter(CounterAction)
+            case primeModal(PrimeModalAction)
+            case favoritePrime(FavoritePrimeAction)
+        }
+        
+        //
+        // MARK:- App Domain
+        //
+        
+        struct AppState {
+            var number: Int = 0
+            var favoritPrimes: [Int] = [3]
+            var activityFeed: [Activity] = []
+            
+            struct Activity {
+                let timestamp: Date
+                let type: ActivityType
+                enum ActivityType {
+                    case addedFavoritePrime(Int)
+                    case removedFavoritePrime(Int)
+                }
+            }
+            
+            var upperRange: Int {
+                if favoritPrimes.count == 0 {
+                    return 0
+                } else {
+                    return favoritPrimes.count-1
+                }
+            }
+            
+            func printState(sender: String, aux: String) {
+                RJS_Logs.info("# \(sender)")
+                RJS_Logs.info("# number: \(number)")
+                RJS_Logs.info("# favoritPrimes: \(favoritPrimes)")
+                RJS_Logs.info("# activityFeed: \(activityFeed.map({ $0.type }))")
+            }
+            
+            var isPrime: Bool {
+                let result = number.isPrime
+                printState(sender: #function, aux: "\(result)")
+                return result
+            }
+            
+            var isFavoritPrime: Bool {
+                let result = favoritPrimes.filter{ $0 == number }.count >= 1
+                printState(sender: #function, aux: "\(result)")
+                return result
+            }
         }
     }
 }
+
+
 
 //
 // MARK:- Reducer
@@ -118,8 +136,8 @@ extension AppReducers {
                 state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(state.number)))
             case .favoritePrime(.deleteFavoritePrimes(let index)):
                 state.favoritPrimes.remove(atOffsets: index)
-                //let prime = state.favoritPrimes[index]
-                //state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(prime)))
+            //let prime = state.favoritPrimes[index]
+            //state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(prime)))
             }
         }
     }
@@ -131,10 +149,10 @@ extension AppReducers {
 
 extension V {
     struct PrimeApp {
-
+        
         typealias AppAction = D.PrimeApp.AppAction
         typealias AppState  = D.PrimeApp.AppState
-
+        
         struct ContentView: View {
             //@ObservedObject var state: AppState
             @ObservedObject var store: GenericStore<AppState, AppAction>
@@ -153,7 +171,7 @@ extension V {
                 }
             }
         }
-
+        
         struct CounterView: View {
             @ObservedObject var store: GenericStore<AppState, AppAction>
             @State var isPrimeModalShown: Bool = false // Local state
@@ -187,11 +205,11 @@ extension V {
                 }
                 .sheet(isPresented: $isPrimeModalShown) { IsPrimeModalView(store: store) }
                 .alert(isPresented: $alertNthPrimeShow) {
-                           Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
-                       }
+                    Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
+                }
             }
         }
-
+        
         struct IsPrimeModalView: View {
             @ObservedObject var store: GenericStore<AppState, AppAction>
             var body: some View {
@@ -215,7 +233,7 @@ extension V {
                 }
             }
         }
-
+        
         struct FavoritPrimesView: View {
             @ObservedObject var store: GenericStore<AppState, AppAction>
             var body: some View {
@@ -228,11 +246,11 @@ extension V {
                         }
                     }.onDelete { indexSet in
                         store.send(.favoritePrime(.deleteFavoritePrimes(indexSet)))
-                      //  store.value.removeFavoritPrime(at: indexSet)
+                        //  store.value.removeFavoritPrime(at: indexSet)
                     }
                 }
             }
         }
-
+        
     }
 }

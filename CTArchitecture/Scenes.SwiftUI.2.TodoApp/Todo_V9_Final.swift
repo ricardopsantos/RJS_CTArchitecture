@@ -10,7 +10,7 @@ import RJSLibUFBase
 import RJSLibUFDesignables
 
 //
-// What was done on V9: Code clean up
+// MARK:- PreviewProvider
 //
 
 struct ToDoApp_Previews: PreviewProvider {
@@ -19,75 +19,104 @@ struct ToDoApp_Previews: PreviewProvider {
     }
 }
 
+//
+// MARK:- Store
+//
 
-typealias Todo            = D.TodoApp.TodoView.Todo
-typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
-typealias TodoAction      = D.TodoApp.TodoView.TodoAction
-
-typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
-typealias AppAction       = D.TodoApp.App.AppAction
-typealias AppState        = D.TodoApp.App.AppState
-
-extension D {
+extension AppStores {
+    
     struct TodoApp {
-        private init() { }
+        
+        typealias Todo            = D.TodoApp.TodoView.Todo
+        typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
+        typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
+        typealias AppAction       = D.TodoApp.App.AppAction
+        typealias AppState        = D.TodoApp.App.AppState
+        
+        static let todos = [
+            Todo(description: "Milk", id: UUID(), isComplete: false),
+            Todo(description: "Eggs", id: UUID(), isComplete: true),
+            Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
+        
+        // Note: dont forget to type erasure on [mainQueue]
+        static let store = Store(
+            initialState: AppState(todos: todos),
+            reducer: AppReducers.TodoApp.appReducer,
+            environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init)
+        )
     }
+    
 }
 
-extension D.TodoApp {
+//
+// MARK:- Domain
+//
+
+extension D {
     
-    //
-    // MARK:- Domain (ContentView)
-    //
-    
-    struct ContentView {
-        private init() { }
-        struct Content: Equatable, Identifiable { let id: UUID }
-        struct ContentEnvironment { }
-        enum ContentAction: Equatable { }
-    }
-    
-    //
-    // MARK:- Domain (TodoView)
-    //
-    
-    struct TodoView {
-        private init() { }
-        struct Todo: Equatable, Identifiable {
-            var description = ""
-            let id: UUID
-            var isComplete = false
+    struct TodoApp {
+        
+        typealias Todo            = D.TodoApp.TodoView.Todo
+        typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
+        typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
+        typealias AppAction       = D.TodoApp.App.AppAction
+        typealias AppState        = D.TodoApp.App.AppState
+        
+        //
+        // MARK:- View Domain (ContentView)
+        //
+        
+        struct ContentView {
+            private init() { }
+            struct Content: Equatable, Identifiable { let id: UUID }
+            struct ContentEnvironment { }
+            enum ContentAction: Equatable { }
         }
         
-        struct TodoEnvironment { }
+        //
+        // MARK:- View Domain (TodoView)
+        //
         
-        enum TodoAction: Equatable {
-            case checkboxTapped
-            case textFieldChanged(String)
-        }
-    }
-    
-    //
-    // MARK:- Domain (App)
-    //
-    
-    struct App {
-        private init() { }
-        enum AppAction: Equatable {
-            case addButtonTapped
-            case todo(index: Int, action: TodoAction)
-            case todoDelayCompleted
-        }
-        
-        struct AppEnvironment {
-            // [AnySchedulerOf<DispatchQueue>] is a typealias for
-            // [AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>]
-            var mainQueue: AnySchedulerOf<DispatchQueue>
-            var uuid: () -> UUID
+        struct TodoView {
+            private init() { }
+            struct Todo: Equatable, Identifiable {
+                var description = ""
+                let id: UUID
+                var isComplete = false
+            }
+            
+            struct TodoEnvironment { }
+            
+            enum TodoAction: Equatable {
+                case checkboxTapped
+                case textFieldChanged(String)
+            }
         }
         
-        struct AppState: Equatable {
-            var todos: [Todo] = []
+        //
+        // MARK:- App Domain 
+        //
+        
+        struct App {
+            private init() { }
+            enum AppAction: Equatable {
+                case addButtonTapped
+                case todo(index: Int, action: TodoAction)
+                case todoDelayCompleted
+            }
+            
+            struct AppEnvironment {
+                // [AnySchedulerOf<DispatchQueue>] is a typealias for
+                // [AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>]
+                var mainQueue: AnySchedulerOf<DispatchQueue>
+                var uuid: () -> UUID
+            }
+            
+            struct AppState: Equatable {
+                var todos: [Todo] = []
+            }
         }
     }
 }
@@ -99,6 +128,14 @@ extension D.TodoApp {
 extension AppReducers {
     
     struct TodoApp {
+        
+        typealias Todo            = D.TodoApp.TodoView.Todo
+        typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
+        typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
+        typealias AppAction       = D.TodoApp.App.AppAction
+        typealias AppState        = D.TodoApp.App.AppState
+        
         static let todoReducer = Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
             switch action {
             case .checkboxTapped:
@@ -162,31 +199,22 @@ extension AppReducers {
     }
 }
 
-extension AppStores {
-    
-    struct TodoApp {
-        
-        static let todos = [
-            Todo(description: "Milk", id: UUID(), isComplete: false),
-            Todo(description: "Eggs", id: UUID(), isComplete: true),
-            Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
-        
-        // Note: dont forget to type erasure on [mainQueue]
-        static let store = Store(
-            initialState: AppState(todos: todos),
-            reducer: AppReducers.TodoApp.appReducer,
-            environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init)
-        )
-    }
-    
-}
+
 
 //
 // MARK:- Views
 //
 
 extension V {
+    
     struct TodoApp {
+        
+        typealias Todo            = D.TodoApp.TodoView.Todo
+        typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
+        typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
+        typealias AppAction       = D.TodoApp.App.AppAction
+        typealias AppState        = D.TodoApp.App.AppState
         
         //
         // ContentView
@@ -241,6 +269,3 @@ extension V {
         }
     }
 }
-
-
-

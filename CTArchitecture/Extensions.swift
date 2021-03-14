@@ -43,12 +43,11 @@ public extension Array {
     }
 }
 
-
 extension Scheduler {
-    public static var testScheduler: AnySchedulerOf<DispatchQueue>  {
+    public static var testScheduler: AnySchedulerOf<DispatchQueue> {
         DispatchQueue.testScheduler.eraseToAnyScheduler()
     }
-    public static var appScheduler: AnySchedulerOf<DispatchQueue>  {
+    public static var appScheduler: AnySchedulerOf<DispatchQueue> {
         DispatchQueue.main.eraseToAnyScheduler()
     }
 }

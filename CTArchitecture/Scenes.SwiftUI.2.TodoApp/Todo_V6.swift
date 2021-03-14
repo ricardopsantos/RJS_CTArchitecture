@@ -6,22 +6,24 @@ import SwiftUI
 //
 import ComposableArchitecture
 import RJSLibUFBase
+import RJSLibUFDesignables
 
 //
-// What was done on V5:
-// 1 - Separated ContentView with subview : ForEachStore(state:action:) -> ForEachStore(state:action:content)
-// 2 - Added Add btn with a new reducer (on the current reduzer using the combine operator), see appReducer_V3
+// What was done on V6:
+//  - Adding tests
+//  - Moving UUID depedency from Reducer to AppEnvironment
+//  - Adding sort
 //
-// Note - From Part 2 of the videos (A Tour of the Composable Architecture: Part 2)
+// Note - From Part 3 of the videos (A Tour of the Composable Architecture: Part 3)
 //
 
-struct SwiftUIViewV5_Previews: PreviewProvider {
+struct SwiftUIViewV6_Previews: PreviewProvider {
     static var previews: some View {
-        Todo_V5.ContentView(store: Todo_V5.store)
+        Todo_V6.ContentView(store: Todo_V6.store)
     }
 }
 
-struct Todo_V5 {
+struct Todo_V6 {
     static let todos = [
         Todo(description: "Milk", id: UUID(), isComplete: false),
         Todo(description: "Eggs", id: UUID(), isComplete: true),
@@ -29,10 +31,10 @@ struct Todo_V5 {
 
     static let store = Store(
         initialState: AppState(todos: todos),
-        reducer: appReducer_V3,
-        environment: AppEnvironment()
+        reducer: appReducer_V4,
+        environment: AppEnvironment(uuid: UUID.init)
       )
-
+    
     //
     // MARK:- ToDo Domain
     //
@@ -47,12 +49,15 @@ struct Todo_V5 {
         
     }
 
-    enum TodoAction {
+    enum TodoAction: Equatable {
       case checkboxTapped
       case textFieldChanged(String)
     }
     
-    // A reducer that operates on just a single todo and just with TodoActions
+    // The todoReducer dont have acess to all the todos (list), just
+    // have acess to a single todo, so if we want to SORT the todos, we cant do it
+    // here because we dont have acess to do it. BUT in the main app reducer, we have
+    // acess to everything
     static let todoReducer = Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
       switch action {
       case .checkboxTapped:
@@ -72,23 +77,18 @@ struct Todo_V5 {
     // MARK:- App Domain
     //
 
-    enum AppAction {
+    enum AppAction: Equatable {
         case addButtonTapped
         case todo(index: Int, action: TodoAction)
     }
 
     struct AppEnvironment {
-
+        // You can of course always reach out to global dependencies and
+        // functions in your reducer, but if you want things to be testable
+        // you should throw those dependencies in the environment and then
+        // you get a shot at controlling them later.
+        var uuid: () -> UUID // Function with no input ant that returns a UUID
     }
-
-    // Deprecated
-    static let appReducer_V2_ = Reducer<AppState, AppAction, AppEnvironment>.combine(
-      todoReducer.forEach(
-        state: \AppState.todos,
-        action: /AppAction.todo(index:action:),
-        environment: { _ in TodoEnvironment() }
-      )
-    )
     
     static let appReducer_V3 = Reducer<AppState, AppAction, AppEnvironment>.combine(
       todoReducer.forEach(
@@ -103,19 +103,58 @@ struct Todo_V5 {
           state.todos.insert(Todo(id: UUID()), at: 0)
           return .none
         case .todo(index: let index, action: let action):
-            // We can also ignore todo actions.
           return .none
         }
       }
     )
       .debug()
     
+    // Added new reducer that dont dependes on UUID inside, Its now on AppEnvironment
+    //
+    // So, we took advantage of the extra Environment generic that all reducers
+    // have in order to properly pass down dependencies to the reducer, and this made
+    // it very easy to control the UUID function and write tests.
+    static let appReducer_V4 = Reducer<AppState, AppAction, AppEnvironment>.combine(
+      todoReducer.forEach(
+        state: \AppState.todos,
+        action: /AppAction.todo(index:action:),
+        environment: { _ in TodoEnvironment() }
+      ),
+        // New reducer
+      Reducer { state, action, environment in
+        switch action {
+        case .addButtonTapped:
+            state.todos.insert(Todo(id: environment.uuid()), at: 0)
+          return .none
+        // SORTING Todos on main reducer because have acess to all todos
+        case .todo(index: _, action: .checkboxTapped):
+            if true {
+                // The standard library sort method is not what is known as a
+                // “stable” sort. This means that two todos for which this
+                // condition returns false are not guaranteed to stay in
+                // the same order relative to each other.
+                state.todos.sort { !$0.isComplete && $1.isComplete }
+            } else {
+                // stale sort
+                state.todos = state.todos
+                  .enumerated()
+                  .sorted(by: { lhs, rhs in
+                    (rhs.element.isComplete && !lhs.element.isComplete) || lhs.offset < rhs.offset
+                  })
+                  .map(\.element)
+            }
+          return .none
+        case .todo(index: let index, action: let action):
+          return .none
+        }
+      }
+    )
+      .debug()
     
     //
     // MARK:- UI
     //
 
-    
     struct ContentView: View {
         let store: Store<AppState, AppAction>
         
@@ -135,37 +174,6 @@ struct Todo_V5 {
             }
           }
         }
-        
-        var body_before_separation: some View {
-          NavigationView {
-            WithViewStore(self.store) { viewStore in
-              List {
-                ForEachStore(
-                  self.store.scope(state: \.todos, action: AppAction.todo(index:action:))
-                ) { todoStore in
-                  WithViewStore(todoStore) { todoViewStore in
-                    HStack {
-                      Button(action: { todoViewStore.send(.checkboxTapped) }) {
-                        Image(systemName: todoViewStore.isComplete ? "checkmark.square" : "square")
-                      }
-                      .buttonStyle(PlainButtonStyle())
-                      TextField(
-                        "Untitled Todo",
-                        text: todoViewStore.binding(
-                          get: \.description,
-                          send: TodoAction.textFieldChanged
-                        )
-                      )
-                    }
-                    .foregroundColor(todoViewStore.isComplete ? .gray : nil)
-                  }
-                }
-              }
-              .navigationBarTitle("Todos")
-            }
-          }
-        }
-        
     }
     
     struct TodoView: View {
@@ -191,5 +199,3 @@ struct Todo_V5 {
       }
     }
 }
-
-

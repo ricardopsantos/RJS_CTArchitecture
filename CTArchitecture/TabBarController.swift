@@ -68,7 +68,7 @@ public class TabBarController: UITabBarController {
         let todo_final = createControllers(tabName: "CTA.Final",
                                            vc: V.TodoApp.ContentView(store: AppStores.TodoApp.store).viewController)
         
-        viewControllers = [todo_final, todo_final, todo_8, prime_3]
+        viewControllers = [todo_final, prime_final, todo_8, prime_3]
     }
 
     private func createControllers(tabName: String, vc: UIViewController) -> UINavigationController {

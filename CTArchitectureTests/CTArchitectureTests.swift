@@ -310,7 +310,6 @@ class CTArchitectureTests: XCTestCase {
             )
     }
     
-    
     //
     // [testTodoSorting_v8] is [testTodoSorting_v6] fixed for side effects added on app version 7
     // Basicly we now need to say what to expect after the tap, AND after the efect

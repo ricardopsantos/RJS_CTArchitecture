@@ -2,6 +2,13 @@
 
 __These are my notes on The__ [__Composable Architecture__](https://github.com/pointfreeco/swift-composable-architecture)
 
+## Useful links
+
+* [Documentation](https://pointfreeco.github.io/swift-composable-architecture/)
+* [Case Studies](https://github.com/pointfreeco/swift-composable-architecture/tree/main/Examples/CaseStudies) 
+* [SwiftUICaseStudies](https://github.com/pointfreeco/swift-composable-architecture/tree/main/Examples/CaseStudies/SwiftUICaseStudies)
+* [UIKitCaseStudies](https://github.com/pointfreeco/swift-composable-architecture/tree/main/Examples/CaseStudies/UIKitCaseStudies)
+
 ---
 
 <p align="center">
@@ -90,6 +97,24 @@ Action: A type that represents all of the actions that can happen in your featur
 * __Reducer__: A function that describes how to evolve the current state of the app to the next state given an action. The reducer is also responsible for returning any effects that should be run, such as API requests, which can be done by returning an Effect value.
 
 * __Store__: The runtime that actually drives your feature. You send all user actions to the store so that the store can run the reducer and effects, and you can observe state changes in the store so that you can update UI.
+
+### Efects
+
+A side effect is a unit of work that needs to be performed in the outside world. For example, an \
+API request needs to reach an external service over HTTP, which brings with it lots of \
+uncertainty and complexity.
+
+Many things we do in our applications involve side effects, such as timers, database requests, \
+file access, socket connections, and anytime a scheduler is involved (such as debouncing, \
+throttling and delaying), and they are typically difficult to test.
+
+This application has two simple side effects:
+
+• Each time you count down the number will be incremented back up after a delay of 1 second.
+• Tapping "Number fact" will trigger an API request to load a piece of trivia about that number.
+
+Both effects are handled by the reducer, and a full test suite is written to confirm that the \
+effects behave in the way we expect.
 
 ### Misc
 

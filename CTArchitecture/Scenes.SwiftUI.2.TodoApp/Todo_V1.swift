@@ -77,7 +77,7 @@ struct Todo_V1 {
         switch action {
 
         }
-        
+
         // After you have performed all of the mutations you want to state,
         // you can return an EFFECT. An EFFECT is a special type that allows you to
         // communicate with the outside world, like executing an API request, writing

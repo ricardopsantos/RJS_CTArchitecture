@@ -9,8 +9,6 @@ import ComposableArchitecture
 import RJSLibUFBase
 import RJSLibUFDesignables
 
-
-
 //
 // What was done on V8:
 // - Fixing unit tests broken by the effects
@@ -157,7 +155,6 @@ struct Todo_V8 {
     )
      // .debug()
     
-    
     static let appReducer_V6 = Reducer<AppState, AppAction, AppEnvironment>.combine(
       todoReducer.forEach(
         state: \AppState.todos,
@@ -269,5 +266,3 @@ struct Todo_V8 {
       }
     }
 }
-
-

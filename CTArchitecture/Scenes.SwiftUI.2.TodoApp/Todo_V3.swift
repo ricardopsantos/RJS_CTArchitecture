@@ -46,7 +46,6 @@ struct Todo_V3 {
       var isComplete = false
     }
 
-    
     // We also need an environment to hold all of this feature’s dependencies
     struct TodoEnvironment {
         
@@ -157,5 +156,3 @@ struct Todo_V3 {
         }
     }
 }
-
-

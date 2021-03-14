@@ -15,25 +15,27 @@ import ComposableArchitecture
 //
 
 class TodoAppFinalTests: XCTestCase {
-    
+
     fileprivate let reducer    = AppReducers.TodoApp.appReducer
     fileprivate let testsQueue = DispatchQueue.testScheduler
     fileprivate let mainQue    = DispatchQueue.main
     fileprivate var uuidDependency: UUID { return UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }
-    
+
     fileprivate typealias TodoAction = D.TodoApp.TodoView.TodoAction
     fileprivate typealias Todo       = D.TodoApp.TodoView.Todo
     fileprivate typealias AppState   = D.TodoApp.App.AppState
 
+    fileprivate typealias AppEnvironment = D.TodoApp.App.AppEnvironment
+
     func test_Completing() {
-        
+
         let initialState = false
         let todos = [
             Todo(description: "Milk_1",
                  id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!,
                  isComplete: initialState),
         ]
-        
+
         let store = TestStore(
             initialState: AppState(todos: todos),
             reducer: reducer,
@@ -41,7 +43,7 @@ class TodoAppFinalTests: XCTestCase {
                 mainQueue: mainQue.eraseToAnyScheduler(),
                 uuid: { fatalError("This should not be called on this test") })
         )
-        
+
         store.assert(
             .send(.todo(index: 0, action: .checkboxTapped)) { //
                 $0.todos[0].isComplete = !initialState
@@ -56,7 +58,7 @@ class TodoAppFinalTests: XCTestCase {
                          isComplete: !initialState)
                 ]
             },
-            
+
             .send(.todo(index: 0, action: .checkboxTapped)) {  // check again, un-check
                 $0.todos[0].isComplete = initialState
             },
@@ -71,11 +73,11 @@ class TodoAppFinalTests: XCTestCase {
                 ]
             }
         )
-        
+
     }
-    
+
     func test_Add() {
-        
+
         let store = TestStore(
             initialState: AppState(todos: []),
             reducer: reducer,
@@ -83,7 +85,7 @@ class TodoAppFinalTests: XCTestCase {
                 mainQueue: mainQue.eraseToAnyScheduler(),
                 uuid: { self.uuidDependency })
         )
-        
+
         let addedTodo = Todo(description: "", id: uuidDependency, isComplete: false)
         store.assert(
             .send(.addButtonTapped) {
@@ -91,14 +93,14 @@ class TodoAppFinalTests: XCTestCase {
             }
         )
     }
-    
+
     func test_SortingMainQueu() {
-                
+
         let todos = [
             Todo(description: "Milk_1", id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, isComplete: true),
             Todo(description: "Milk_2", id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, isComplete: true)
         ]
-        
+
         let store = TestStore(
             initialState: AppState(todos: todos),
             reducer: reducer,
@@ -106,7 +108,7 @@ class TodoAppFinalTests: XCTestCase {
                 mainQueue: mainQue.eraseToAnyScheduler(),
                 uuid: { fatalError("This should not be called on this test") })
         )
-        
+
         store.assert(
             .send(.todo(index: 1, action: .checkboxTapped)) {
                 // What we expect after tap?
@@ -126,14 +128,14 @@ class TodoAppFinalTests: XCTestCase {
             }
         )
     }
-    
+
     func test_SortingTestsQueu() {
-        
+
         let todos = [
             Todo(description: "Milk", id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, isComplete: false),
             Todo(description: "Eggs", id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, isComplete: false)
         ]
-        
+
         let store = TestStore(
             initialState: AppState(todos: todos),
             reducer: reducer,
@@ -141,7 +143,7 @@ class TodoAppFinalTests: XCTestCase {
                 mainQueue: testsQueue.eraseToAnyScheduler(),
                 uuid: { fatalError("This should not be called on this test") })
         )
-        
+
         store.assert(
             .send(.todo(index: 0, action: .checkboxTapped)) {
                 // What we expect after tap?
