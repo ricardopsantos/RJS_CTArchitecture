@@ -13,6 +13,7 @@ struct AppDomain { private init() { } }
 typealias D = AppDomain
 
 struct AppReducers { private init() { } }
+struct AppStores { private init() { } }
 
 public func nthPrimeV1(_ n: Int, callback: @escaping (Int?) -> Void) {
     let seconds = 3.0
