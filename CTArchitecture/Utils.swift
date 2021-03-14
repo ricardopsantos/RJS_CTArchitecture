@@ -40,8 +40,6 @@ struct ActivityIndicator: View {
     }
 }
 
-
-
 func liveNumberFact(for n: Int) -> Effect<String, D.LiveNumberApp.NumbersApiError> {
     return URLSession.shared.dataTaskPublisher(for: URL(string: "http://numbersapi.com/\(n)/trivia")!)
         .map { data, _ in String(decoding: data, as: UTF8.self) }
