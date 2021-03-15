@@ -15,7 +15,7 @@ import RJSLibUFDesignables
 
 struct ToDoApp_Previews: PreviewProvider {
     static var previews: some View {
-        V.TodoApp.ContentView(store: AppStores.TodoApp.store)
+        V.TodoApp.ContentView(store: AppStores.TodoApp().store)
     }
 }
 
@@ -39,12 +39,12 @@ extension AppStores {
             Todo(description: "Eggs", id: UUID(), isComplete: true),
             Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
         
+        var initialState: AppState = AppState(todos: todos)
+        var reducer : Reducer<AppState, AppAction, AppEnvironment> { AppReducers.TodoApp().appReducer }
+        var environment : AppEnvironment { AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init) }
+        
         // Note: dont forget to type erasure on [mainQueue]
-        static let store = Store(
-            initialState: AppState(todos: todos),
-            reducer: AppReducers.TodoApp.appReducer,
-            environment: AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init)
-        )
+        var store: Store<AppState, AppAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
     }
     
 }
@@ -136,7 +136,7 @@ extension AppReducers {
         typealias AppAction       = D.TodoApp.App.AppAction
         typealias AppState        = D.TodoApp.App.AppState
         
-        static let todoReducer = Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
+        var todoReducer: Reducer<Todo, TodoAction, TodoEnvironment> { Reducer<Todo, TodoAction, TodoEnvironment> { state, action, _ in
             switch action {
             case .checkboxTapped:
                 state.isComplete.toggle()
@@ -146,13 +146,10 @@ extension AppReducers {
                 return .none
             }
         }
+        }
         
-        static let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
-            AppReducers.TodoApp.todoReducer.forEach(
-                state: \AppState.todos,
-                action: /AppAction.todo(index:action:),
-                environment: { _ in TodoEnvironment() }
-            ),
+        var appReducer: Reducer<AppState, AppAction, AppEnvironment> { Reducer<AppState, AppAction, AppEnvironment>.combine(
+            todoReducer.forEach(state: \AppState.todos, action: /AppAction.todo(index:action:), environment: { _ in TodoEnvironment() } ),
             Reducer { state, action, environment in
                 switch action {
                 case .addButtonTapped:
@@ -195,7 +192,7 @@ extension AppReducers {
                 }
             }
         )
-        .debug()
+        .debug()}
     }
 }
 

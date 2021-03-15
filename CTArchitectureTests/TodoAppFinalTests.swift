@@ -16,7 +16,7 @@ import ComposableArchitecture
 
 class TodoAppFinalTests: XCTestCase {
 
-    fileprivate let reducer    = AppReducers.TodoApp.appReducer
+    fileprivate let reducer    = AppReducers.TodoApp().appReducer
     fileprivate let testsQueue = DispatchQueue.testScheduler
     fileprivate let mainQue    = DispatchQueue.main
     fileprivate var uuidDependency: UUID { return UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }

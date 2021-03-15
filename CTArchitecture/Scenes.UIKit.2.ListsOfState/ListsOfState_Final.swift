@@ -43,9 +43,10 @@ extension AppStores {
                 CounterState()
             ]
         )
-        static let reducer     = AppReducers.ListOfStateApp().counterListReducer
-        static let environment = CounterListEnvironment()
-        static let store       = Store(initialState: initialState, reducer: reducer, environment: environment)
+                
+        static var reducer : Reducer<CounterListState, CounterListAction, CounterListEnvironment> { AppReducers.ListOfStateApp().counterListReducer }
+        static var environment : CounterListEnvironment { CounterListEnvironment() }
+        static var store : Store<CounterListState, CounterListAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
     }
 }
 
@@ -68,12 +69,12 @@ extension D {
             case counter(index: Int, action: CounterAction)
         }
         
-        struct CounterListEnvironment {}
+        struct CounterListEnvironment { }
         
         //
         // MARK:- App Domain
         //
-        
+        /*
         struct App {
             private init() { }
             fileprivate struct CounterState: Equatable {
@@ -86,7 +87,7 @@ extension D {
             }
 
             fileprivate struct CounterEnvironment {}
-        }
+        }*/
     }
 }
 

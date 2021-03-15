@@ -13,7 +13,7 @@ import RJSLibUFBase
 
 struct PrimeApp_Previews: PreviewProvider {
     static var previews: some View {
-        PrimeV3.ContentView(store: AppStores.PrimeApp.store)
+        V.PrimeApp.ContentView(store: AppStores.PrimeApp().store)
     }
 }
 
@@ -23,11 +23,12 @@ struct PrimeApp_Previews: PreviewProvider {
 
 extension AppStores {
     struct PrimeApp {
-        #warning("fix!!!!! wrong app")
-        #warning("fix!!!!! wrong app")
-        #warning("fix!!!!! wrong app")
+        
+        typealias AppAction = D.PrimeApp.AppAction
+        typealias AppState  = D.PrimeApp.AppState
 
-       static let store = PrimeV3.Store(initialValue: PrimeV3.AppState(), reducer: PrimeV3().appReducer)
+        var reducer: (inout AppState, AppAction) -> Void { AppReducers.PrimeApp().appReducer }
+        var store: GenericStore<AppState, AppAction> { GenericStore(initialValue: AppState(), reducer: reducer) }
     }
 }
 
@@ -136,8 +137,6 @@ extension AppReducers {
                 state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(state.number)))
             case .favoritePrime(.deleteFavoritePrimes(let index)):
                 state.favoritPrimes.remove(atOffsets: index)
-            //let prime = state.favoritPrimes[index]
-            //state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(prime)))
             }
         }
     }
