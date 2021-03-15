@@ -9,7 +9,7 @@ import SwiftUI
 struct LiveNumberApp_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            V.LiveNumberApp.EffectsBasicsView(store: AppStores.LiveNumberApp.store)
+            V.LiveNumberApp.EffectsBasicsView(store: AppStores.LiveNumberApp().store)
         }
     }
 }
@@ -25,13 +25,12 @@ extension AppStores {
         typealias EffectsBasicsAction      = D.LiveNumberApp.EffectsBasicsAction
         typealias EffectsBasicsEnvironment = D.LiveNumberApp.EffectsBasicsEnvironment
         
-        static let store = Store(
-            initialState: EffectsBasicsState(),
-            reducer: AppReducers.LiveNumberApp().effectsBasicsReducer,
-            environment: EffectsBasicsEnvironment(
-                mainQueue: DispatchQueue.main.eraseToAnyScheduler(),
-                numberFact: liveNumberFact(for:))
-        )
+        var initialState : EffectsBasicsState { EffectsBasicsState() }
+        var reducer      : Reducer<EffectsBasicsState, EffectsBasicsAction, EffectsBasicsEnvironment> { AppReducers.LiveNumberApp().effectsBasicsReducer }
+        var environment  : EffectsBasicsEnvironment { EffectsBasicsEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), numberFact: liveNumberFact(for:)) }
+        
+        // Note: dont forget to type erasure on [mainQueue]
+        var store: Store<EffectsBasicsState, EffectsBasicsAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
     }
 }
 
@@ -95,9 +94,7 @@ extension AppReducers {
         typealias EffectsBasicsAction      = D.LiveNumberApp.EffectsBasicsAction
         typealias EffectsBasicsEnvironment = D.LiveNumberApp.EffectsBasicsEnvironment
         
-        let effectsBasicsReducer = Reducer<
-            EffectsBasicsState, EffectsBasicsAction, EffectsBasicsEnvironment
-        > { state, action, environment in
+        let effectsBasicsReducer = Reducer<EffectsBasicsState, EffectsBasicsAction, EffectsBasicsEnvironment> { state, action, environment in
             switch action {
             case .decrementButtonTapped:
                 state.count -= 1

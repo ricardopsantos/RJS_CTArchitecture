@@ -93,11 +93,7 @@ struct Todo_V8 {
     
     // deprecated
     static let _appReducer_V5 = Reducer<AppState, AppAction, AppEnvironment>.combine(
-      todoReducer.forEach(
-        state: \AppState.todos,
-        action: /AppAction.todo(index:action:),
-        environment: { _ in TodoEnvironment() }
-      ),
+      todoReducer.forEach(state: \AppState.todos, action: /AppAction.todo(index:action:), environment: { _ in TodoEnvironment() } ),
       Reducer { state, action, environment in
         switch action {
         case .addButtonTapped:

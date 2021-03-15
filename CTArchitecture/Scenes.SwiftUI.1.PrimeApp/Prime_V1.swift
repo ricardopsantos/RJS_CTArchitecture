@@ -16,16 +16,16 @@ struct PrimeV1_Previews: PreviewProvider {
 }
 
 struct PrimeV1 {
-
+    
     class AppState: ObservableObject {
         @Published var count: Int = 0
         @Published var favoritPrimes: [Int] = []
-
+        
         var isFavoritPrime: Bool { favoritPrimes.contains(count) }
         func addPrime() { favoritPrimes.append(count) }
         func removePrime() { favoritPrimes = favoritPrimes.filter({ $0 != count }) }
     }
-
+    
     struct ContentView: View {
         @ObservedObject var state: AppState
         var body: some View {
@@ -43,7 +43,7 @@ struct PrimeV1 {
             .navigationBarTitle("Title2").foregroundColor(.blue)
         }
     }
-
+    
     struct CounterView: View {
         @ObservedObject var state: AppState        // Global state
         @State var isPrimeModalShown: Bool = false // Local state
@@ -69,11 +69,11 @@ struct PrimeV1 {
             .font(.title)
             .sheet(isPresented: $isPrimeModalShown) { IsPrimeModalView(state: state) }
             .alert(isPresented: $alertNthPrimeShow) {
-                       Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
-                   }
+                Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
+            }
         }
     }
-
+    
     struct IsPrimeModalView: View {
         @ObservedObject var state: AppState // Global state
         var body: some View {
@@ -95,7 +95,7 @@ struct PrimeV1 {
             }
         }
     }
-
+    
     struct FavoritePrimesView: View {
         @ObservedObject var state: AppState        // Global state
         var body: some View {
@@ -109,8 +109,8 @@ struct PrimeV1 {
                 }
             }
             .font(.title)
-           // .navigationTitle("FavoritePrimesView")
+            // .navigationTitle("FavoritePrimesView")
         }
     }
-
+    
 }

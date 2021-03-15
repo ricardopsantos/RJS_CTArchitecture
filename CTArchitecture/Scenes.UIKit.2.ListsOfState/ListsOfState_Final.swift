@@ -19,8 +19,8 @@ let counterReducer              = AppReducers.CounterViewApp.counterReducer
 
 struct CountersTableViewController_Previews: PreviewProvider {
     static var previews: some View {
-        let store = AppStores.ListOfStateApp.store
-        let vc = UINavigationController(rootViewController: V.ListOfStateApp.CountersTableViewController(store: store))
+        let store = AppStores.ListOfStateApp().store
+        let vc    = UINavigationController(rootViewController: V.ListOfStateApp.CountersTableViewController(store: store))
         return UIViewRepresented(makeUIView: { _ in vc.view })
     }
 }
@@ -36,17 +36,11 @@ extension AppStores {
         typealias CounterListAction      = D.ListOfStateApp.CounterListAction
         typealias CounterListEnvironment = D.ListOfStateApp.CounterListEnvironment
         
-        static let initialState = CounterListState(
-            counters: [
-                CounterState(),
-                CounterState(),
-                CounterState()
-            ]
-        )
-                
-        static var reducer : Reducer<CounterListState, CounterListAction, CounterListEnvironment> { AppReducers.ListOfStateApp().counterListReducer }
-        static var environment : CounterListEnvironment { CounterListEnvironment() }
-        static var store : Store<CounterListState, CounterListAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
+        var initialState : CounterListState { CounterListState(counters: [CounterState(), CounterState(), CounterState()]) }
+        var reducer      : Reducer<CounterListState, CounterListAction, CounterListEnvironment> { AppReducers.ListOfStateApp().counterListReducer }
+        var environment  : CounterListEnvironment { CounterListEnvironment() }
+        
+        var store : Store<CounterListState, CounterListAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
     }
 }
 
@@ -74,20 +68,10 @@ extension D {
         //
         // MARK:- App Domain
         //
-        /*
-        struct App {
-            private init() { }
-            fileprivate struct CounterState: Equatable {
-              var count = 0
-            }
-
-            fileprivate enum CounterAction: Equatable {
-              case decrementButtonTapped
-              case incrementButtonTapped
-            }
-
-            fileprivate struct CounterEnvironment {}
-        }*/
+        
+        enum AppAction: Equatable { }
+        struct AppEnvironment { }
+        struct AppState: Equatable { }
     }
 }
 
@@ -132,7 +116,7 @@ extension V {
                 self.viewStore = ViewStore(store)
                 super.init(nibName: nil, bundle: nil)
             }
-
+            
             required init?(coder: NSCoder) {
                 fatalError("init(coder:) has not been implemented")
             }
@@ -145,11 +129,11 @@ extension V {
                     .sink(receiveValue: { [weak self] _ in self?.tableView.reloadData() })
                     .store(in: &self.cancellables)
             }
-
+            
             override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
                 self.viewStore.counters.count
             }
-
+            
             override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
                 cell.accessoryType = .disclosureIndicator
@@ -160,8 +144,8 @@ extension V {
             override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 let store = self.store.scope(
                     state: { $0.counters[indexPath.row] },
-                        action: { .counter(index: indexPath.row, action: $0) }
-                    )
+                    action: { .counter(index: indexPath.row, action: $0) }
+                )
                 let vc = CounterViewController(store:store )
                 self.navigationController?.pushViewController(vc, animated: true)
             }

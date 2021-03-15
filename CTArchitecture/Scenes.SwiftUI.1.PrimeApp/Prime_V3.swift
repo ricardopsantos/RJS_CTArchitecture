@@ -22,10 +22,10 @@ struct PrimeV3_Previews: PreviewProvider {
 }
 
 struct PrimeV3 {
-
+    
     final class Store<Value, Action>: ObservableObject {
         //typealias ReducerType = (inout Value, Action) -> Void
-
+        
         // Reducer that takes a value and action and return a new value
         let reducer: (inout Value, Action) -> Void
         @Published var value: Value
@@ -38,7 +38,7 @@ struct PrimeV3 {
             self.reducer(&self.value, action)
         }
     }
-
+    
     enum FavoritePrimeAction {
         case deleteFavoritePrimes(IndexSet)
     }
@@ -46,19 +46,19 @@ struct PrimeV3 {
         case saveFavoritePrimeTap
         case removeFavoritePrimeTap
     }
-
+    
     enum CounterAction {
         case decrementTap
         case incrementTap
     }
-
+    
     // AppAction is a type to nest other app actions
     enum AppAction {
         case counter(CounterAction)
         case primeModal(PrimeModalAction)
         case favoritePrime(FavoritePrimeAction)
     }
-
+    
     // inout cauze we are change the `state` instead of doing a copy, changing the copy and return it
     func appReducer(state: inout AppState, action: AppAction) -> Void {
         switch action {
@@ -74,19 +74,19 @@ struct PrimeV3 {
             state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(state.number)))
         case .favoritePrime(.deleteFavoritePrimes(let index)):
             state.favoritPrimes.remove(atOffsets: index)
-            //let prime = state.favoritPrimes[index]
-            //state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(prime)))
+        //let prime = state.favoritPrimes[index]
+        //state.activityFeed.append(AppState.Activity(timestamp: Date(), type: .removedFavoritePrime(prime)))
         }
     }
-
+    
     // MARK: - Model
-
+    
     struct AppState {
         var number: Int = 0
         var favoritPrimes: [Int] = [3]
         var activityFeed: [Activity] = []
         var userIsLoged: User?
-
+        
         struct Activity {
             let timestamp: Date
             let type: ActivityType
@@ -95,13 +95,13 @@ struct PrimeV3 {
                 case removedFavoritePrime(Int)
             }
         }
-
+        
         struct User {
             let id: String
             let name: String
             let bio: String
         }
-
+        
         var upperRange: Int {
             if favoritPrimes.count == 0 {
                 return 0
@@ -109,14 +109,14 @@ struct PrimeV3 {
                 return favoritPrimes.count-1
             }
         }
-
+        
         func printState(sender: String, aux: String) {
             RJS_Logs.info("# \(sender)")
             RJS_Logs.info("# number: \(number)")
             RJS_Logs.info("# favoritPrimes: \(favoritPrimes)")
             RJS_Logs.info("# activityFeed: \(activityFeed.map({ $0.type }))")
         }
-
+        
         var isPrime: Bool {
             let result = number.isPrime
             printState(sender: #function, aux: "\(result)")
@@ -127,14 +127,14 @@ struct PrimeV3 {
             printState(sender: #function, aux: "\(result)")
             return result
         }
-
+        
     }
-
+    
     struct PrimeAlert: Identifiable {
         let prime: Int
         var id: Int { prime }
     }
-
+    
     struct ContentView: View {
         //@ObservedObject var state: AppState
         @ObservedObject var store: Store<AppState, AppAction>
@@ -153,7 +153,7 @@ struct PrimeV3 {
             }
         }
     }
-
+    
     struct CounterView: View {
         @ObservedObject var store: Store<AppState, AppAction>
         @State var isPrimeModalShown: Bool = false // Local state
@@ -174,7 +174,7 @@ struct PrimeV3 {
                     Button(action: {
                         //store.value.increment()
                         //store.value = counterReducer(state: store.value, action: .incrementTap)
-                       // store.send(.incrementTap)
+                        // store.send(.incrementTap)
                         store.send(.counter(.incrementTap))
                     }, label: { Text("+") })
                 }
@@ -194,11 +194,11 @@ struct PrimeV3 {
             //.navigationTitle("CounterView")
             .sheet(isPresented: $isPrimeModalShown) { IsPrimeModalView(store: store) }
             .alert(isPresented: $alertNthPrimeShow) {
-                       Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
-                   }
+                Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
+            }
         }
     }
-
+    
     struct IsPrimeModalView: View {
         @ObservedObject var store: Store<AppState, AppAction>
         var body: some View {
@@ -224,7 +224,7 @@ struct PrimeV3 {
             }
         }
     }
-
+    
     struct FavoritPrimesView: View {
         @ObservedObject var store: Store<AppState, AppAction>
         var body: some View {
@@ -237,11 +237,11 @@ struct PrimeV3 {
                     }
                 }.onDelete { indexSet in
                     store.send(.favoritePrime(.deleteFavoritePrimes(indexSet)))
-                  //  store.value.removeFavoritPrime(at: indexSet)
+                    //  store.value.removeFavoritPrime(at: indexSet)
                 }
             }
         }
     }
-
+    
 }
 

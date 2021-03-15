@@ -37,7 +37,7 @@ public extension Array {
         guard index >= 0 else { return nil }
         return Int(index) < count ? self[Int(index)] : nil
     }
-
+    
     func element(at index: Int) -> Element? {
         safeItem(at: index)
     }

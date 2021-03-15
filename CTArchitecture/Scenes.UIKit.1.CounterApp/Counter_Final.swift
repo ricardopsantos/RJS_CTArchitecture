@@ -9,7 +9,13 @@ import UIKit
 
 struct UIKIT_CounterView_Previews: PreviewProvider {
     static var previews: some View {
-        let vc = V.CounterViewApp.CounterViewController(store: AppStores.CounterViewApp.store)
+        
+        typealias CounterState       = D.CounterViewApp.CounterState
+        typealias CounterAction      = D.CounterViewApp.CounterAction
+        typealias CounterEnvironment = D.CounterViewApp.CounterEnvironment
+        
+        let store = AppStores.CounterViewApp().store
+        let vc    = V.CounterViewApp.CounterViewController(store: store)
         return UIViewRepresented(makeUIView: { _ in vc.view })
     }
 }
@@ -25,10 +31,11 @@ extension AppStores {
         typealias CounterAction      = D.CounterViewApp.CounterAction
         typealias CounterEnvironment = D.CounterViewApp.CounterEnvironment
         
-        static let store = Store(
-            initialState: CounterState(),
-            reducer: AppReducers.CounterViewApp.counterReducer,
-            environment: CounterEnvironment())
+        var initialState : CounterState { CounterState() }
+        var reducer      : Reducer<CounterState, CounterAction, CounterEnvironment> { AppReducers.CounterViewApp.counterReducer }
+        var environment  : CounterEnvironment { CounterEnvironment() }
+        
+        var store        : Store<CounterState, CounterAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
     }
 }
 
@@ -59,14 +66,11 @@ extension D {
         // MARK:- App Domain
         //
         
-        struct App {
-            private init() { }
-            enum AppAction: Equatable { }
-            struct AppEnvironment { }
-            struct AppState: Equatable { }
-        }
+        enum AppAction: Equatable { }
+        struct AppEnvironment { }
+        struct AppState: Equatable { }
     }
-
+    
 }
 
 //
@@ -79,7 +83,7 @@ extension AppReducers {
         typealias CounterState       = D.CounterViewApp.CounterState
         typealias CounterAction      = D.CounterViewApp.CounterAction
         typealias CounterEnvironment = D.CounterViewApp.CounterEnvironment
-
+        
         static let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment> { state, action, _ in
             switch action {
             case .decrementButtonTapped:
@@ -98,7 +102,7 @@ extension AppReducers {
 //
 
 extension V {
-
+    
     struct CounterViewApp {
         
         typealias CounterState       = D.CounterViewApp.CounterState
@@ -110,7 +114,7 @@ extension V {
             var cancellables: Set<AnyCancellable> = []
             
             let countLabel = UILabel()
-
+            
             init(store: Store<CounterState, CounterAction>) {
                 self.viewStore = ViewStore(store)
                 super.init(nibName: nil, bundle: nil)
@@ -158,7 +162,7 @@ extension V {
                     rootStackView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
                 ])
             }
-
+            
         }
     }
     

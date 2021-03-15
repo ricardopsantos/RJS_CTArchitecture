@@ -30,18 +30,19 @@ extension AppStores {
         typealias Todo            = D.TodoApp.TodoView.Todo
         typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
         typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        
         typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
         typealias AppAction       = D.TodoApp.App.AppAction
         typealias AppState        = D.TodoApp.App.AppState
         
-        static let todos = [
-            Todo(description: "Milk", id: UUID(), isComplete: false),
-            Todo(description: "Eggs", id: UUID(), isComplete: true),
-            Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
-        
-        var initialState: AppState = AppState(todos: todos)
-        var reducer : Reducer<AppState, AppAction, AppEnvironment> { AppReducers.TodoApp().appReducer }
-        var environment : AppEnvironment { AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init) }
+        var todos: [Todo] {
+            [Todo(description: "Milk", id: UUID(), isComplete: false),
+             Todo(description: "Eggs", id: UUID(), isComplete: true),
+             Todo(description: "Hand Soap", id: UUID(), isComplete: false)]
+        }
+        var initialState : AppState { AppState(todos: todos) }
+        var reducer      : Reducer<AppState, AppAction, AppEnvironment> { AppReducers.TodoApp().appReducer }
+        var environment  : AppEnvironment { AppEnvironment(mainQueue: DispatchQueue.main.eraseToAnyScheduler(), uuid: UUID.init) }
         
         // Note: dont forget to type erasure on [mainQueue]
         var store: Store<AppState, AppAction> { Store(initialState: initialState, reducer: reducer, environment: environment) }
@@ -132,6 +133,7 @@ extension AppReducers {
         typealias Todo            = D.TodoApp.TodoView.Todo
         typealias TodoEnvironment = D.TodoApp.TodoView.TodoEnvironment
         typealias TodoAction      = D.TodoApp.TodoView.TodoAction
+        
         typealias AppEnvironment  = D.TodoApp.App.AppEnvironment
         typealias AppAction       = D.TodoApp.App.AppAction
         typealias AppState        = D.TodoApp.App.AppState

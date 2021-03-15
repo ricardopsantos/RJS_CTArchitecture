@@ -22,7 +22,7 @@ struct PrimeV2 {
         @Published var number: Int = 0
         @Published var favoritPrimes: [Int] = [3]
         @Published var activityFeed: [Activity] = []
-
+        
         struct Activity {
             let timestamp: Date
             let type: ActivityType
@@ -31,11 +31,11 @@ struct PrimeV2 {
                 case removedFavoritePrime(Int)
             }
         }
-
+        
         struct User {
             let userId: String
         }
-
+        
         var upperRange: Int {
             if favoritPrimes.count == 0 {
                 return 0
@@ -85,7 +85,7 @@ struct PrimeV2 {
             favoritPrimes.remove(atOffsets: index)
         }
     }
-
+    
     struct ContentView: View {
         @ObservedObject var state: AppState
         var body: some View {
@@ -103,7 +103,7 @@ struct PrimeV2 {
             }
         }
     }
-
+    
     struct CounterView: View {
         @ObservedObject var state: AppState        // Global state
         @State var isPrimeModalShown: Bool = false // Local state
@@ -134,11 +134,11 @@ struct PrimeV2 {
             //.navigationTitle("CounterView")
             .sheet(isPresented: $isPrimeModalShown) { IsPrimeModalView(state: state) }
             .alert(isPresented: $alertNthPrimeShow) {
-                       Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
-                   }
+                Alert(title: Text("The nth prime is \(alertNthPrime!)"), message: Text(""), dismissButton: .default(Text("OK")))
+            }
         }
     }
-
+    
     struct IsPrimeModalView: View {
         @ObservedObject var state: AppState // Global state
         var body: some View {
@@ -162,7 +162,7 @@ struct PrimeV2 {
             }
         }
     }
-
+    
     struct FavoritPrimesView: View {
         @ObservedObject var state: AppState
         var body: some View {

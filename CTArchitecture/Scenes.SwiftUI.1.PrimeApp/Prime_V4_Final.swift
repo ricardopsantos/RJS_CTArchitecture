@@ -26,9 +26,11 @@ extension AppStores {
         
         typealias AppAction = D.PrimeApp.AppAction
         typealias AppState  = D.PrimeApp.AppState
-
-        var reducer: (inout AppState, AppAction) -> Void { AppReducers.PrimeApp().appReducer }
-        var store: GenericStore<AppState, AppAction> { GenericStore(initialValue: AppState(), reducer: reducer) }
+        
+        var initialState : AppState { AppState() }
+        var reducer      : (inout AppState, AppAction) -> Void { AppReducers.PrimeApp().appReducer }
+        
+        var store        : GenericStore<AppState, AppAction> { GenericStore(initialValue: initialState, reducer: reducer) }
     }
 }
 
