@@ -7,8 +7,11 @@
 
 import XCTest
 import Combine
-@testable import CTArchitecture
+//
 import ComposableArchitecture
+import Nimble
+//
+@testable import CTArchitecture
 
 //
 // https://github.com/pointfreeco/swift-composable-architecture
@@ -225,7 +228,7 @@ class CTArchitectureTests: XCTestCase {
               .send(.todo(index: 0, action: .checkboxTapped)) {
                 if Bool.random() {
                     // Version 1 : Works
-                    $0.todos[0].isComplete = true
+                    //$0.todos[0].isComplete = true
                     $0.todos = [
                       $0.todos[1],
                       $0.todos[0],

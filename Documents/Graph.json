@@ -1,23 +1,12 @@
 {
-  "fileGroups" : [
-    "..\/Documents"
-  ],
-  "targetTemplates" : {
-    "UnitTest" : {
-      "platform" : "iOS",
-      "deploymentTarget" : "13.0",
-      "type" : "bundle.unit-test"
-    },
-    "Framework" : {
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
-      },
-      "platform" : "iOS",
-      "deploymentTarget" : "13.0",
-      "type" : "framework"
-    }
+  "options" : {
+    "groupSortPosition" : "top",
+    "minimumXcodeGenVersion" : "2.18.0",
+    "findCarthageFrameworks" : false,
+    "bundleIdPrefix" : "com.rjps.CTArchitecture",
+    "deploymentTarget" : "13.0",
+    "generateEmptyDirectories" : true,
+    "xcodeVersion" : "12.0.1"
   },
   "aggregateTargets" : {
     "SwiftLint" : {
@@ -30,27 +19,50 @@
       ]
     }
   },
+  "packages" : {
+    "ComposableArchitecture" : {
+      "url" : "https:\/\/github.com\/pointfreeco\/swift-composable-architecture",
+      "branch" : "master"
+    },
+    "RJSLibUF" : {
+      "url" : "https:\/\/github.com\/ricardopsantos\/RJSLibUF",
+      "revision" : "4a6e4231d8026b10b4959cc7a086d328eed08eaa"
+    }
+  },
+  "include" : [
+    "_FrameworkTemplate.yml",
+    "_UnitTestTemplate.yml",
+    "_SwiftLint.yml"
+  ],
+  "name" : "CTArchitecture",
   "targets" : {
     "CTArchitecture" : {
+      "platform" : "iOS",
+      "type" : "application",
       "deploymentTarget" : 13,
+      "sources" : [
+        {
+          "path" : "..\/CTArchitecture"
+        }
+      ],
       "dependencies" : [
         {
           "target" : "DevTools",
           "link" : true
         },
         {
-          "target" : "Extensions",
-          "link" : true
+          "link" : true,
+          "target" : "Extensions"
         },
         {
-          "link" : false,
           "product" : "RJSLibUFBase",
-          "package" : "RJSLibUF"
+          "package" : "RJSLibUF",
+          "link" : false
         },
         {
           "link" : false,
-          "product" : "RJSLibUFAppThemes",
-          "package" : "RJSLibUF"
+          "package" : "RJSLibUF",
+          "product" : "RJSLibUFAppThemes"
         },
         {
           "package" : "RJSLibUF",
@@ -58,22 +70,52 @@
           "link" : false
         },
         {
-          "link" : true,
-          "package" : "ComposableArchitecture"
+          "package" : "ComposableArchitecture",
+          "link" : true
         }
       ],
       "settings" : {
         "base" : {
           "MARKETING_VERSION" : 1
         }
-      },
+      }
+    },
+    "Extensions" : {
+      "templates" : [
+        "Framework"
+      ],
       "sources" : [
         {
-          "path" : "..\/CTArchitecture"
+          "path" : "..\/Extensions"
+        }
+      ]
+    },
+    "DevTools" : {
+      "dependencies" : [
+        {
+          "link" : true,
+          "product" : "RJSLibUFBase",
+          "package" : "RJSLibUF"
+        },
+        {
+          "product" : "RJSLibUFAppThemes",
+          "link" : true,
+          "package" : "RJSLibUF"
+        },
+        {
+          "package" : "RJSLibUF",
+          "link" : true,
+          "product" : "RJSLibUFDesignables"
         }
       ],
-      "platform" : "iOS",
-      "type" : "application"
+      "templates" : [
+        "Framework"
+      ],
+      "sources" : [
+        {
+          "path" : "..\/DevTools"
+        }
+      ]
     },
     "CTArchitectureTests" : {
       "dependencies" : [
@@ -81,8 +123,8 @@
           "sdk" : "XCTest.framework"
         },
         {
-          "link" : true,
-          "target" : "CTArchitecture"
+          "target" : "CTArchitecture",
+          "link" : true
         },
         {
           "link" : false,
@@ -97,75 +139,33 @@
       "templates" : [
         "UnitTest"
       ]
-    },
-    "DevTools" : {
-      "dependencies" : [
-        {
-          "link" : true,
-          "product" : "RJSLibUFBase",
-          "package" : "RJSLibUF"
-        },
-        {
-          "link" : true,
-          "product" : "RJSLibUFAppThemes",
-          "package" : "RJSLibUF"
-        },
-        {
-          "package" : "RJSLibUF",
-          "link" : true,
-          "product" : "RJSLibUFDesignables"
-        }
-      ],
-      "sources" : [
-        {
-          "path" : "..\/DevTools"
-        }
-      ],
-      "templates" : [
-        "Framework"
-      ]
-    },
-    "Extensions" : {
-      "templates" : [
-        "Framework"
-      ],
-      "sources" : [
-        {
-          "path" : "..\/Extensions"
-        }
-      ]
     }
   },
-  "include" : [
-    "_FrameworkTemplate.yml",
-    "_UnitTestTemplate.yml",
-    "_SwiftLint.yml"
-  ],
   "settings" : {
     "base" : {
       "SWIFT_VERSION" : 5.2999999999999998,
-      "ENABLE_BITCODE" : false,
-      "IPHONEOS_DEPLOYMENT_TARGET" : 13
+      "IPHONEOS_DEPLOYMENT_TARGET" : 13,
+      "ENABLE_BITCODE" : false
     }
   },
-  "packages" : {
-    "RJSLibUF" : {
-      "revision" : "4a6e4231d8026b10b4959cc7a086d328eed08eaa",
-      "url" : "https:\/\/github.com\/ricardopsantos\/RJSLibUF"
+  "targetTemplates" : {
+    "Framework" : {
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      },
+      "type" : "framework",
+      "platform" : "iOS",
+      "deploymentTarget" : "13.0"
     },
-    "ComposableArchitecture" : {
-      "url" : "https:\/\/github.com\/pointfreeco\/swift-composable-architecture",
-      "branch" : "master"
+    "UnitTest" : {
+      "deploymentTarget" : "13.0",
+      "platform" : "iOS",
+      "type" : "bundle.unit-test"
     }
   },
-  "name" : "CTArchitecture",
-  "options" : {
-    "findCarthageFrameworks" : false,
-    "generateEmptyDirectories" : true,
-    "groupSortPosition" : "top",
-    "minimumXcodeGenVersion" : "2.18.0",
-    "xcodeVersion" : "12.0.1",
-    "deploymentTarget" : "13.0",
-    "bundleIdPrefix" : "com.rjps.CTArchitecture"
-  }
+  "fileGroups" : [
+    "..\/Documents"
+  ]
 }

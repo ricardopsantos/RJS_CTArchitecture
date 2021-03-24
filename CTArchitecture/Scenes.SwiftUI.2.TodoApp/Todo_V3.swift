@@ -107,10 +107,7 @@ struct Todo_V3 {
     }
     
     static let appReducer_V2 = Reducer<AppState, AppAction, AppEnvironment>.combine(
-        todoReducer.forEach(
-            state: \AppState.todos,
-            action: /AppAction.todo(index:action:),
-            environment: { _ in TodoEnvironment() }
+        todoReducer.forEach(state: \AppState.todos, action: /AppAction.todo(index:action:), environment: { _ in TodoEnvironment() }
         )
     )
     

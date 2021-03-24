@@ -110,9 +110,7 @@ struct Todo_V4 {
             NavigationView {
                 WithViewStore(self.store) { viewStore in
                     List {
-                        ForEachStore(
-                            self.store.scope(state: \.todos, action: AppAction.todo(index:action:))
-                        ) { todoStore in
+                        ForEachStore(self.store.scope(state: \.todos, action: AppAction.todo(index:action:))) { todoStore in
                             WithViewStore(todoStore) { todoViewStore in
                                 HStack {
                                     Button(action: { todoViewStore.send(.checkboxTapped) }) {
